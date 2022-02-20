@@ -48,3 +48,11 @@ class personnelController extends Controller
         }
         return view('personnels.dashboard', compact('personnel'));
     }
+
+    public function logout()
+    {
+        if (Session::has('id')){
+            Session::pull('id');
+            return redirect('login');
+        }
+    }
