@@ -39,3 +39,12 @@ class personnelController extends Controller
             return view('personnels.login');
        }
     }
+
+    public function dashboard()
+    {
+       $personnel = array();
+        if (Session::has('id')){
+          $personnel = Personnel::where('personnel_id', Session::get('id'))->first();
+        }
+        return view('personnels.dashboard', compact('personnel'));
+    }
