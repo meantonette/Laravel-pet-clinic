@@ -58,3 +58,25 @@ class rescuerController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($rescuer_id)
+    {
+        $rescuers = Rescuer::find($rescuer_id);
+        return view('rescuers.edit')->with('rescuers', $rescuers);
+    }
+
