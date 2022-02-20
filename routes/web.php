@@ -19,3 +19,4 @@ use App\Http\Controllers\adopterController;
 
 Route::resource('/animals', animalController::class)->middleware('isLoggedIn');
 Route::resource('/rescuer', rescuerController::class)->middleware('isLoggedIn');
+Route::resource('/diseaseinjury', diseaseInjuryController::class)->middleware('isLoggedIn');
