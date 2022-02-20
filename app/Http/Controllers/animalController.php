@@ -97,25 +97,26 @@ class animalController extends Controller
      */
     { 
         $animals = Animal::find($animals_id);
-        $animals->animal_name = $req->input('animal_name');
-        $animals->age = $req->input('age');
-        $animals->gender = $req->input('gender');
-        $animals->type = $req->input('type');
-        if($req->hasfile('animal_pic'))
+        $animals->animal_name = $request->input('animal_name');
+        $animals->age = $request->input('age');
+        $animals->gender = $request->input('gender');
+        $animals->type = $request->input('type');
+        $animals->rescuer_id = $request->input('rescuer_id');
+        if($request->hasfile('images'))
         {
-            $destination = 'uploads/animals/'.$animals->animal_pic;
+            $destination = 'uploads/animals/'.$animals->images;
             if(File::exists($destination))
             {
                 File::delete($destination);
             }
-            $file = $req->file('animal_pic');
+            $file = $request->file('images');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/animals/', $filename);
-            $animals->animal_pic = $filename;
+            $animals->images = $filename;
         }
         $animals->update();
-        return redirect('/animals');
+        return Redirect::to('/animals')->with('update','Animal Data Updated!'); 
     }
 
     /**
