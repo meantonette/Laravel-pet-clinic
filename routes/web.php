@@ -26,3 +26,4 @@ Route::resource('/adopter', adopterController::class)->middleware('isLoggedIn');
 
 Route::get('/login', [personnelController::class,'login'])->middleware('alreadyLoggedIn');
 Route::post('/check', [personnelController::class,'check'])->name('check');
+Route::get('/dashboard', [personnelController::class,'dashboard'])->middleware('isLoggedIn');
