@@ -82,3 +82,27 @@ class personnelController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(personnelRequest $request)
+    {
+        $personnels = new Personnel;
+        $personnels->full_name = $request->input('full_name');
+        $personnels->email = $request->input('email');
+        $personnels->password = Hash::make($request->input('password'));
+        $personnels->role = $request->input('role');
+        if($request->hasfile('images'))
+        {
+            $file = $request->file('images');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $file->move('uploads/personnels/', $filename);
+            $personnels->images = $filename;
+        }
+        $personnels->save();
+            return Redirect::to('login'); 
+    }
+
