@@ -43,14 +43,6 @@ class animalController extends Controller
      */
     public function store(Request $req)
     {
-        $req->validate([
-            'animal_name' => 'required',
-            'age' => 'required|integer|min:1|max:100',
-            'gender' => 'required',
-            'type' => 'required',
-            'animal_pic' => 'required|mimes:jpg,png,jpeg,gif|max:5048'
-        ]);
-
         $animals = new Animal;
         $animals->animal_name = $req->input('animal_name');
         $animals->age = $req->input('age');
