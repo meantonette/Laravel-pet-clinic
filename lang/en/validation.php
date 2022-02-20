@@ -142,8 +142,64 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'first_name' => [
+            'required' => 'First name is required',
+            'alpha' => 'You can only put letters here',
+            'min' => 'Try again! Your name is too short',
+        ],
+        'last_name' => [
+            'required' => 'Last name is required',
+            'alpha' => 'You can only put letters here',
+            'min' => 'Try again! Your name is too short',
+        ],
+        'phone_number' => [
+            'required' => 'Phone number is required',
+            'numeric' => 'You can only put numbers here',
+        ],
+        'images' => [
+            'required' => 'Image is required',
+            'image' => 'The file must be an image',
+            'mimes' => 'The image should be an jpg, png, jpeg or a gif',
+            'max' => 'The file size that can be uploaded can only be 5048'
+        ],
+        'animal_name' => [
+            'required' => 'Animal name is required',
+            'alpha' => 'You can only put letters here',
+            'min' => 'Try again! Your name is too short',
+        ],
+        'age' => [
+            'required' => 'Age is required',
+            'numeric' => 'You can only put numbers here',
+            'min' => 'Age must start at 1',
+            'max' => 'Age must not exceed at 20',
+        ],
+        'gender' => [
+            'required' => 'Gender is required',
+            'alpha' => 'You can only put letters here',
+        ],
+        'type' => [
+            'required' => 'Animal Type is required',
+            'alpha' => 'You can only put letters here',
+        ],
+        'full_name' => [
+            'required' => 'Full name is required',
+            'min' => 'Try again! Your name is too short',
+        ],
+        'email' => [
+            'required' => 'Email is required',
+            'unique' => 'Sorry but this Email has already been used by an existing user',
+        ],
+        'password' => [
+            'required' => 'Password is required',
+            'min' => 'Try again! Your password is too short',
+        ],
+        'role' => [
+            'required' => 'The Role Type is required',
+            'alpha' => 'You can only put letters here',
+        ],
+        'classify' => [
+            'required' => 'You need to Classify the kind of disease or injury the animal have',
+            'alpha' => 'You can only put letters here',
         ],
     ],
 
