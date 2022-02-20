@@ -90,3 +90,16 @@ class diseaseInjuryController extends Controller
         return Redirect::to('diseaseinjury')->with('update','Disease/Injury Data has been updated!'); 
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $disease_injuries = DiseaseInjury::find($id);
+        $disease_injuries->delete();
+        return Redirect::to('diseaseinjury')->with('delete','Disease/Injury Data has been deleted!'); 
+    }
+}
