@@ -130,3 +130,32 @@ class personnelController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(personnelUpdateController $request, $personnel_id)
+    {
+        $personnels = Personnel::find($personnel_id);
+        $personnels->full_name = $request->input('full_name');
+        $personnels->email = $request->input('email');
+        $personnels->password = Hash::make($request->input('password'));
+        $personnels->role = $request->input('role');
+        if($request->hasfile('images'))
+        {
+            $destination = 'uploads/personnels/'.$personnels->images;
+            if(File::exists($destination))
+            {
+                File::delete($destination);
+            }
+            $file = $request->file('images');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $file->move('uploads/personnels/', $filename);
+            $personnels->images = $filename;
+        }
+        $personnels->update();
+        return Redirect::to('personnel')->with('update','Personnel Data Updated!'); 
+    }
