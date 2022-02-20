@@ -35,3 +35,16 @@ class diseaseInjuryController extends Controller
         return view('disease_injuries.create',['animals' => $animals]);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(diseaseInjuryRequest $request)
+    {
+        DiseaseInjury::create($request->all());
+            return Redirect::to('diseaseinjury')->with('add','Disease/Injury has been added!'); 
+    }
+
+    /**
