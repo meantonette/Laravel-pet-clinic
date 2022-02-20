@@ -81,7 +81,11 @@ class animalController extends Controller
     public function edit($animals_id)
     {
         $animals = Animal::find($animals_id);
-        return view('animals.edit')->with('animals', $animals);
+        $rescuers = Rescuer::all();
+        return view('animals.edit',[
+            'animals' => $animals,
+            'rescuers' => $rescuers
+        ]);
     }
 
     /**
