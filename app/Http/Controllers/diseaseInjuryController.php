@@ -74,3 +74,19 @@ class diseaseInjuryController extends Controller
         ]);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(diseaseInjuryRequest $request, $id)
+    {
+        $disease_injuries = DiseaseInjury::find($id);
+        $disease_injuries->classify = $request->input('classify');
+        $disease_injuries->animals_id = $request->input('animals_id');
+        $disease_injuries->update();
+        return Redirect::to('diseaseinjury')->with('update','Disease/Injury Data has been updated!'); 
+    }
+
