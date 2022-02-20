@@ -86,3 +86,36 @@ class adopterController extends Controller
             'adopters' => $adopters
         ]);
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(adopterRequest $request, $adopter_id)
+    {
+        $adopters = Adopter::find($adopter_id);
+        $adopters->first_name = $request->input('first_name');
+        $adopters->last_name = $request->input('last_name');
+        $adopters->phone_number = $request->input('phone_number');
+        $adopters->animals_id = $request->input('animals_id');
+        if($request->hasfile('images'))
+        {
+            $destination = 'uploads/adopters/'.$adopters->images;
+            if(File::exists($destination))
+            {
+                File::delete($destination);
+            }
+            $file = $request->file('images');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $file->move('uploads/adopters/', $filename);
+            $adopters->images = $filename;
+        }
+        $adopters->update();
+        return Redirect::to('/adopter')->with('update','Adopter Data Updated!'); 
+    }
+
+    /**
