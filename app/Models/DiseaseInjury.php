@@ -23,3 +23,7 @@ class DiseaseInjury extends Model
 
     protected $guarded = ['id'];
 
+    public function animal(){
+        return $this->belongsTo('\App\Models\Animal','animals_id');
+    }
+}
