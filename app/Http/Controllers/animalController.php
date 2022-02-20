@@ -41,7 +41,7 @@ class animalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $req)
+    public function store(animalRequest $request)
     {
         $animals = new Animal;
         $animals->animal_name = $request->input('animal_name');
@@ -95,6 +95,7 @@ class animalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function update(animalRequest $request, $animals_id)
     { 
         $animals = Animal::find($animals_id);
         $animals->animal_name = $request->input('animal_name');
