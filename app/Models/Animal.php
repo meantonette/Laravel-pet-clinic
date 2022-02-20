@@ -43,4 +43,9 @@ class Animal extends Model
     protected $primaryKey = 'animals_id';
 
     protected $guarded = ['animals_id'];
+
+    public function rescuer(){
+        return $this->belongsTo('\App\Models\Rescuer','rescuer_id');
+    }
+
 }
