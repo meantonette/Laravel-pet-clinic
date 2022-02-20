@@ -31,3 +31,5 @@
                     class="block shadow-5xl p-2 my-5 w-full"
                     name="password"
                     placeholder="Enter your password">
+
+                    <a href="/personnel/create" class="bg-green-600 p-2 ml-12 text-white">Sign up Here</a>
