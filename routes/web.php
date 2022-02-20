@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\animalController;
+use App\Http\Controllers\rescuerController;
+use App\Http\Controllers\personnelController;
+use App\Http\Controllers\diseaseInjuryController;
+use App\Http\Controllers\adopterController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
