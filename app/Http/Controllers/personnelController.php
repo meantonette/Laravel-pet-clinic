@@ -159,3 +159,22 @@ class personnelController extends Controller
         $personnels->update();
         return Redirect::to('personnel')->with('update','Personnel Data Updated!'); 
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($personnel_id)
+    {
+        $personnels = Personnel::find($personnel_id);
+        $destination = 'uploads/personnels/'.$personnels->images;
+        if(File::exists($destination))
+        {
+            File::delete($destination);
+        }
+        $personnels->delete();
+        return Redirect::to('personnel')->with('delete','Personnel Data Deleted!'); 
+    }
+}
