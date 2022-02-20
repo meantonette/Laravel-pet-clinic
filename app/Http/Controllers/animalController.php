@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Animal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
+use App\Http\Requests\animalRequest;
+use App\Models\Rescuer;
 
 class animalController extends Controller
 {
