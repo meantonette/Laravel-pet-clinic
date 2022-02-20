@@ -18,7 +18,7 @@ class animalController extends Controller
      */
     public function index()
     {
-        $animals = Animal::all();
+        $animals = Animal::with('rescuer')->get();
         return view('animals.index',[
             'animals' => $animals
         ]);
