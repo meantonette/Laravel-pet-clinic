@@ -27,3 +27,14 @@
           <td class="pl-32">
             <img src="{{ asset('uploads/personnels/'.$personnel->images)}}" alt="I am A Pic" width="75" height="75">
           </td>
+          <td class=" text-center text-3xl ">
+            <a href="logout" class="bg-red-600 py-2 px-6">Logout &rarr;</a>
+          </td>
+      </tr>
+        </table>
+    </div>
+</div>
+<hr>
+<h1 class="text-center text-5xl pt-32 text-green-600">Our mission is to provide the highest quality animal care to your pet and improve his or her quality of life through the preservation, enhancement, and restoration of your pets health.</h1>
+
+@endsection     	
