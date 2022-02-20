@@ -14,3 +14,12 @@ class DiseaseInjury extends Model
             'alpha',
         ],
     ];
+
+    use HasFactory;
+
+    protected $table = 'disease_injuries';
+
+    protected $primaryKey = 'id';
+
+    protected $guarded = ['id'];
+
