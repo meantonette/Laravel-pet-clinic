@@ -30,6 +30,7 @@
             <th class="w-screen text-3xl">Age</th>
             <th class="w-screen text-3xl">Gender</th>
             <th class="w-screen text-3xl">Type of Animal</th>
+            <th class="w-screen text-3xl">Rescuer</th>
             <th class="w-screen text-3xl">Animal Pic</th>
             <th class="w-screen text-3xl">Update</th>
             <th class="w-screen text-3xl">Delete</th>
@@ -52,8 +53,11 @@
           <td class=" text-center text-3xl">
                 {{ $animal->type }}
           </td>
+          <td class=" text-center text-3xl">
+            {{ $animal->rescuer->last_name }},{{ $animal->rescuer->first_name }}
+         </td>
           <td class="pl-16">
-            <img src="{{ asset('uploads/animals/'.$animal->animal_pic)}}" alt="I am A Pic" width="75" height="75">
+            <img src="{{ asset('uploads/animals/'.$animal->images)}}" alt="I am A Pic" width="75" height="75">
           </td>
           <td class=" text-center">
             <a href="animals/{{ $animal->animals_id }}/edit" class="text-center text-3xl bg-green-600 p-2">
