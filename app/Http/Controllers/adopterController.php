@@ -60,3 +60,29 @@ class adopterController extends Controller
             return Redirect::to('/adopter')->with('add','New Adopter Added!'); 
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($adopter_id)
+    {
+        $adopters = Adopter::find($adopter_id);
+        $animals = Animal::all();
+        return view('adopters.edit',[
+            'animals' => $animals,
+            'adopters' => $adopters
+        ]);
+    }
