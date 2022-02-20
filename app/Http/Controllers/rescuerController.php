@@ -8,3 +8,18 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
 use App\Models\Rescuer;
 
+class rescuerController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $rescuers = Rescuer::all();
+        return view('rescuers.index',[
+            'rescuers' => $rescuers
+        ]);
+    }
+
