@@ -39,3 +39,7 @@ class Adopter extends Model
 
     protected $guarded = ['adopter_id'];
 
+    public function animal(){
+        return $this->belongsTo('\App\Models\Animal','animals_id');
+    }
+}
