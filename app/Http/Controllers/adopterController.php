@@ -35,3 +35,28 @@ class adopterController extends Controller
         return view('adopters.create',['animals' => $animals]);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(adopterRequest $request)
+    {
+        $adopters = new Adopter();
+        $adopters->first_name = $request->input('first_name');
+        $adopters->last_name = $request->input('last_name');
+        $adopters->phone_number = $request->input('phone_number');
+        $adopters->animals_id = $request->input('animals_id');
+        if($request->hasfile('images'))
+        {
+            $file = $request->file('images');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $file->move('uploads/adopters/', $filename);
+            $adopters->images = $filename;
+        }
+        $adopters->save();
+            return Redirect::to('/adopter')->with('add','New Adopter Added!'); 
+    }
+
