@@ -31,7 +31,8 @@ class animalController extends Controller
      */
     public function create()
     {
-        return view('animals.create');
+        $rescuers = Rescuer::all();
+        return view('animals.create',['rescuers' => $rescuers]);
     }
 
     /**
