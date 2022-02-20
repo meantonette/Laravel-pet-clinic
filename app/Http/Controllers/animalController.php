@@ -44,20 +44,21 @@ class animalController extends Controller
     public function store(Request $req)
     {
         $animals = new Animal;
-        $animals->animal_name = $req->input('animal_name');
-        $animals->age = $req->input('age');
-        $animals->gender = $req->input('gender');
-        $animals->type = $req->input('type');
-        if($req->hasfile('animal_pic'))
+        $animals->animal_name = $request->input('animal_name');
+        $animals->age = $request->input('age');
+        $animals->gender = $request->input('gender');
+        $animals->type = $request->input('type');
+        $animals->rescuer_id = $request->input('rescuer_id');
+        if($request->hasfile('images'))
         {
-            $file = $req->file('animal_pic');
+            $file = $request->file('images');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/animals/', $filename);
-            $animals->animal_pic = $filename;
+            $animals->images = $filename;
         }
         $animals->save();
-        return redirect('/animals');
+        return Redirect::to('/animals')->with('add','New Animal Added!'); 
     }
 
     /**
