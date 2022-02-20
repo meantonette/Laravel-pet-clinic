@@ -119,3 +119,20 @@ class adopterController extends Controller
     }
 
     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($adopter_id)
+    {
+        $adopters = Adopter::find($adopter_id);
+        $destination = 'uploads/adopters/'.$adopters->images;
+        if(File::exists($destination))
+        {
+            File::delete($destination);
+        }
+        $adopters->delete();
+        return Redirect::to('/adopter')->with('delete','Adopter Data Deleted!');
+    }
+}
