@@ -48,3 +48,29 @@ class diseaseInjuryController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $disease_injuries = DiseaseInjury::find($id);
+        $animals = Animal::all();
+        return view('disease_injuries.edit',[
+            'animals' => $animals,
+            'disease_injuries' => $disease_injuries
+        ]);
+    }
+
