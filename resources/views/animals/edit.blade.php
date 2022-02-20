@@ -76,19 +76,13 @@
                         @endforeach
                     </select>
 
-                    <button type="submit" class="bg-gray-800 text-white block shadow-5xl p-2 w-full font-bold">
-                        Submit
-                    </button>
+                    <div class="grid grid-cols-2 gap-2 w-full">
+                        <button type="submit" class="bg-green-800 text-white font-bold p-2 mt-5">
+                            Submit
+                        </button>
+                        <a href="{{url()->previous()}}" class="bg-gray-800 text-white font-bold p-2 mt-5 text-center" role="button">Cancel</a>
+                        </div>
                 </div>
             </form>
         </div>
-        @if ($errors->any())
-        <div class="text-center pt-3">
-            @foreach ($errors->all() as $error)
-                <li class="list-none text-red-500 text-xl">
-                    {{ $error }}
-                </li>
-            @endforeach
-        </div>
-        @endif
 @endsection
