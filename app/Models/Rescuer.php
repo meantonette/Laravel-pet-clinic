@@ -31,3 +31,11 @@ class Rescuer extends Model
         ],
     ];
 
+    use HasFactory;
+
+    protected $table = 'rescuers';
+
+    protected $primaryKey = 'rescuer_id';
+
+    protected $guarded = ['rescuer_id'];
+
