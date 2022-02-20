@@ -109,3 +109,22 @@ class rescuerController extends Controller
         $rescuers->update();
         return Redirect::to('rescuer')->with('update','Rescuer Data Updated!'); 
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($rescuer_id)
+    {
+        $rescuers = Rescuer::find($rescuer_id);
+        $destination = 'uploads/rescuers/'.$rescuers->images;
+        if(File::exists($destination))
+        {
+            File::delete($destination);
+        }
+        $rescuers->delete();
+        return Redirect::to('rescuer')->with('delete','Rescuer Data Deleted!'); 
+    }
+}
