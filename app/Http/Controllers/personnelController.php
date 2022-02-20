@@ -10,3 +10,13 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Models\Personnel;
+
+class personnelController extends Controller
+{
+
+    public function login()
+    {
+        return view('personnels.login');
+    }
+
+        /**
