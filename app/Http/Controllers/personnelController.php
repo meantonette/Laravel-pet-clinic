@@ -106,3 +106,27 @@ class personnelController extends Controller
             return Redirect::to('login'); 
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($personnel_id)
+    {
+        $personnels = Personnel::find($personnel_id);
+        return view('personnels.edit')->with('personnels', $personnels);
+    }
+
+    /**
