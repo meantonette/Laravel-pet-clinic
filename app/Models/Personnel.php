@@ -33,3 +33,12 @@ class Personnel extends Model
         ],
     ];
 
+    use HasFactory;
+
+    protected $table = 'personnels';
+
+    protected $primaryKey = 'personnel_id';
+
+    protected $guarded = ['personnel_id'];
+
+}
