@@ -30,3 +30,12 @@ class Adopter extends Model
             'max:5048',
         ],
     ];
+
+    use HasFactory;
+
+    protected $table = 'adopters';
+
+    protected $primaryKey = 'adopter_id';
+
+    protected $guarded = ['adopter_id'];
+
