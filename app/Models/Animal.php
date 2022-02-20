@@ -41,4 +41,6 @@ class Animal extends Model
     protected $table = 'animals';
 
     protected $primaryKey = 'animals_id';
+
+    protected $guarded = ['animals_id'];
 }
