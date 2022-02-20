@@ -56,3 +56,19 @@ class personnelController extends Controller
             return redirect('login');
         }
     }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $personnels = Personnel::all();
+        return view('personnels.index',[
+            'personnels' => $personnels
+        ]);
+    }
+
+    /**
