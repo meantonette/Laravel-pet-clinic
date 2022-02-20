@@ -17,17 +17,17 @@
             <button> <a href="{{ URL('animals') }}">
                     <h5>Animals</h5>
                 </a></button>
-            <button><a href="{{ URL('owner') }}">
-                    <h5>Owners</h5>
+            <button><a href="{{ URL('rescuer') }}">
+                    <h5>Rescuers</h5>
                 </a></button>
-            <button><a href={{ URL('employee') }}>
-                    <h5>Employee</h5>
+            <button><a href={{ URL('personnel') }}>
+                    <h5>Personnel</h5>
                 </a></button>
-            <button><a href="{{ URL('service') }}">
-                    <h5>Service</h5>
+            <button><a href="{{ URL('diseaseinjury') }}">
+                    <h5>Disease / Injury</h5>
                 </a></button>
-            <button><a href="{{ URL('consultation') }}">
-                    <h5>Consultation</h5>
+            <button><a href="{{ URL('adopter') }}">
+                    <h5>Adopters</h5>
                 </a></button>
         </ul>
     </nav>
