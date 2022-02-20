@@ -22,3 +22,6 @@ Route::resource('/rescuer', rescuerController::class)->middleware('isLoggedIn');
 Route::resource('/diseaseinjury', diseaseInjuryController::class)->middleware('isLoggedIn');
 Route::resource('/personnel', personnelController::class)->middleware('isLoggedIn');
 Route::resource('/adopter', adopterController::class)->middleware('isLoggedIn');
+
+
+Route::get('/login', [personnelController::class,'login'])->middleware('alreadyLoggedIn');
