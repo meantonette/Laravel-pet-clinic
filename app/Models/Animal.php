@@ -48,4 +48,7 @@ class Animal extends Model
         return $this->belongsTo('\App\Models\Rescuer','rescuer_id');
     }
 
+    public function diseaseInjury(){
+        return $this->hasMany(DiseasInjury::class);
+    }
 }
