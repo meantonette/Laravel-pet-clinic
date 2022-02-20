@@ -20,3 +20,22 @@ class personnelController extends Controller
     }
 
         /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function check(Request $req)
+    {
+       $check = Personnel::where('email', $req->email)->first();
+       if ($check) {
+            if(Hash::check($req->password, $check->password)) {
+                $req->session()->put('id', $check->personnel_id);
+                return redirect('dashboard');
+            } else{
+                return view('personnels.login');
+            }
+       } else{
+            return view('personnels.login');
+       }
+    }
