@@ -28,3 +28,4 @@ Route::get('/login', [personnelController::class,'login'])->middleware('alreadyL
 Route::post('/check', [personnelController::class,'check'])->name('check');
 Route::get('/dashboard', [personnelController::class,'dashboard'])->middleware('isLoggedIn');
 Route::get('/logout', [personnelController::class,'logout'])->middleware('isLoggedIn');
+Route::get('/personnel/create', [personnelController::class,'create'])->middleware('alreadyLoggedIn');
