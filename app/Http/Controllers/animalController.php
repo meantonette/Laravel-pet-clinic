@@ -95,16 +95,7 @@ class animalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $req, $animals_id)
-    {
-        $req->validate([
-            'animal_name' => 'required',
-            'age' => 'required|integer|min:1|max:100',
-            'gender' => 'required',
-            'type' => 'required',
-            'animal_pic' => 'required|mimes:jpg,png,jpeg,gif|max:5048'
-        ]);
-
+    { 
         $animals = Animal::find($animals_id);
         $animals->animal_name = $req->input('animal_name');
         $animals->age = $req->input('age');
