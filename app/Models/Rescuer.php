@@ -39,3 +39,7 @@ class Rescuer extends Model
 
     protected $guarded = ['rescuer_id'];
 
+    public function Animal(){
+        return $this->hasMany(Animal::class);
+    }
+}
