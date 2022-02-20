@@ -8,3 +8,19 @@ use Illuminate\Support\Facades\File;
 use App\Http\Requests\diseaseInjuryRequest;
 use App\Models\DiseaseInjury;
 use App\Models\Animal;
+
+class diseaseInjuryController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $disease_injuries = DiseaseInjury::all();
+        return view('disease_injuries.index',[
+            'disease_injuries' => $disease_injuries
+        ]);
+    }
+
