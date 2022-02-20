@@ -17,4 +17,4 @@ use App\Http\Controllers\adopterController;
 |
 */
 
-Route::resource('/animals', animalController::class);
+Route::resource('/animals', animalController::class)->middleware('isLoggedIn');
