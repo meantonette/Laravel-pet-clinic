@@ -100,6 +100,15 @@ class diseaseInjuryController extends Controller
     {
         $disease_injuries = DiseaseInjury::find($id);
         $disease_injuries->delete();
-        return Redirect::to('diseaseinjury')->with('delete','Disease/Injury Data has been deleted!'); 
+
+    public function restore($id)
+    {
+        DiseaseInjury::onlyTrashed()
+            ->findOrFail($id)
+            ->restore();
+        return Redirect::route("diseaseinjury.index")->with(
+            "restore",
+            "Disease/Injury Data Restored!"
+        );
     }
 }
