@@ -17,9 +17,9 @@ class rescuerController extends Controller
      */
     public function index()
     {
-        $rescuers = Rescuer::all();
-        return view('rescuers.index',[
-            'rescuers' => $rescuers
+        $rescuers = Rescuer::withTrashed()->paginate(5);
+        return view("rescuers.index", [
+            "rescuers" => $rescuers,
         ]);
     }
 
