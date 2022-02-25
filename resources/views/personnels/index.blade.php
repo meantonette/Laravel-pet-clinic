@@ -52,7 +52,7 @@
           <td class=" text-center text-3xl">
                 {{ $personnel->role }}
           </td>
-          <td class="pl-24">
+          <td class="pl-12">
             <img src="{{ asset('uploads/personnels/'.$personnel->images)}}" alt="I am A Pic" width="75" height="75">
           </td>
           <td class=" text-center">
