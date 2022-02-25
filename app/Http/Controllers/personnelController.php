@@ -179,7 +179,15 @@ class personnelController extends Controller
             "Personnel Data Restored!"
         );
     }
-        $personnels->delete();
-        return Redirect::to('personnel')->with('delete','Personnel Data Deleted!'); 
+
+    public function forceDelete($personnel_id)
+    {
+        Personnel::withTrashed()
+            ->findOrFail($personnel_id)
+            ->forceDelete();
+        return Redirect::route("personnel.index")->with(
+            "force",
+            "Personnel Data Permanently Deleted!"
+        );
     }
 }
