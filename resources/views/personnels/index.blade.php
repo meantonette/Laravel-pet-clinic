@@ -34,6 +34,8 @@
             <th class="w-screen text-3xl">Personnel Pic</th>
             <th class="w-screen text-3xl">Update</th>
             <th class="w-screen text-3xl">Delete</th>
+            <th class="w-screen text-3xl">Restore</th>
+            <th class="w-screen text-3xl">Destroy</th>
         </tr>
 
   @forelse ($personnels as $personnel)
