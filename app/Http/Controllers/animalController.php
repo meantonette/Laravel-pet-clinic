@@ -18,9 +18,9 @@ class animalController extends Controller
      */
     public function index()
     {
-        $animals = Animal::with('rescuer')->get();
-        return view('animals.index',[
-            'animals' => $animals
+        $animals = Animal::withTrashed()->paginate(5);
+        return view("animals.index", [
+            "animals" => $animals,
         ]);
     }
 
