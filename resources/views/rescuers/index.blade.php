@@ -88,6 +88,13 @@
             </a>
         </td>
         @endif
+        <td>
+            <a href="{{ route('rescuer.forceDelete', $rescuer->rescuer_id) }}" >
+                <p class="text-center text-3xl bg-black text-white p-2 mx-4" onclick="return confirm('Do you want to delete this data permanently?')">
+                   Destroy  &rarr;
+                </p>
+              </a>
+          </td>
       </tr>
             @empty
                 <p>No Rescuer Data in the Database</p>
