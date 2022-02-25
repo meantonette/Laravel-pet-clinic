@@ -32,7 +32,7 @@ class diseaseInjuryController extends Controller
     public function create()
     {
         $animals = Animal::all();
-        return view('disease_injuries.create',['animals' => $animals]);
+        return view("disease_injuries.create", ["animals" => $animals]);
     }
 
     /**
@@ -44,7 +44,10 @@ class diseaseInjuryController extends Controller
     public function store(diseaseInjuryRequest $request)
     {
         DiseaseInjury::create($request->all());
-            return Redirect::to('diseaseinjury')->with('add','Disease/Injury has been added!'); 
+        return Redirect::to("diseaseinjury")->with(
+            "add",
+            "Disease/Injury has been added!"
+        );
     }
 
     /**
@@ -55,7 +58,6 @@ class diseaseInjuryController extends Controller
      */
     public function show($id)
     {
-        
     }
 
     /**
@@ -68,9 +70,9 @@ class diseaseInjuryController extends Controller
     {
         $disease_injuries = DiseaseInjury::find($id);
         $animals = Animal::all();
-        return view('disease_injuries.edit',[
-            'animals' => $animals,
-            'disease_injuries' => $disease_injuries
+        return view("disease_injuries.edit", [
+            "animals" => $animals,
+            "disease_injuries" => $disease_injuries,
         ]);
     }
 
@@ -84,10 +86,13 @@ class diseaseInjuryController extends Controller
     public function update(diseaseInjuryRequest $request, $id)
     {
         $disease_injuries = DiseaseInjury::find($id);
-        $disease_injuries->classify = $request->input('classify');
-        $disease_injuries->animals_id = $request->input('animals_id');
+        $disease_injuries->classify = $request->input("classify");
+        $disease_injuries->animals_id = $request->input("animals_id");
         $disease_injuries->update();
-        return Redirect::to('diseaseinjury')->with('update','Disease/Injury Data has been updated!'); 
+        return Redirect::to("diseaseinjury")->with(
+            "update",
+            "Disease/Injury Data has been updated!"
+        );
     }
 
     /**
@@ -98,8 +103,13 @@ class diseaseInjuryController extends Controller
      */
     public function destroy($id)
     {
-        $disease_injuries = DiseaseInjury::find($id);
+        $disease_injuries = DiseaseInjury::findOrFail($id);
         $disease_injuries->delete();
+        return Redirect::to("diseaseinjury")->with(
+            "delete",
+            "Disease/Injury Data has been deleted!"
+        );
+    }
 
     public function restore($id)
     {

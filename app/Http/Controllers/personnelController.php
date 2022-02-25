@@ -13,13 +13,12 @@ use App\Models\Personnel;
 
 class personnelController extends Controller
 {
-
     public function login()
     {
-        return view('personnels.login');
+        return view("personnels.login");
     }
 
-        /**
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -27,36 +26,38 @@ class personnelController extends Controller
      */
     public function check(Request $req)
     {
-       $check = Personnel::where('email', $req->email)->first();
-       if ($check) {
-            if(Hash::check($req->password, $check->password)) {
-                $req->session()->put('id', $check->personnel_id);
-                return redirect('dashboard');
-            } else{
-                return view('personnels.login');
+        $check = Personnel::where("email", $req->email)->first();
+        if ($check) {
+            if (Hash::check($req->password, $check->password)) {
+                $req->session()->put("id", $check->personnel_id);
+                return redirect("dashboard");
+            } else {
+                return view("personnels.login");
             }
-       } else{
-            return view('personnels.login');
-       }
+        } else {
+            return view("personnels.login");
+        }
     }
 
     public function dashboard()
     {
-       $personnel = array();
-        if (Session::has('id')){
-          $personnel = Personnel::where('personnel_id', Session::get('id'))->first();
+        $personnel = [];
+        if (Session::has("id")) {
+            $personnel = Personnel::where(
+                "personnel_id",
+                Session::get("id")
+            )->first();
         }
-        return view('personnels.dashboard', compact('personnel'));
+        return view("personnels.dashboard", compact("personnel"));
     }
 
     public function logout()
     {
-        if (Session::has('id')){
-            Session::pull('id');
-            return redirect('login');
+        if (Session::has("id")) {
+            Session::pull("id");
+            return redirect("login");
         }
     }
-
 
     /**
      * Display a listing of the resource.
@@ -79,7 +80,7 @@ class personnelController extends Controller
      */
     public function create()
     {
-        return view('personnels.create');
+        return view("personnels.create");
     }
 
     /**
@@ -90,21 +91,20 @@ class personnelController extends Controller
      */
     public function store(personnelRequest $request)
     {
-        $personnels = new Personnel;
-        $personnels->full_name = $request->input('full_name');
-        $personnels->email = $request->input('email');
-        $personnels->password = Hash::make($request->input('password'));
-        $personnels->role = $request->input('role');
-        if($request->hasfile('images'))
-        {
-            $file = $request->file('images');
+        $personnels = new Personnel();
+        $personnels->full_name = $request->input("full_name");
+        $personnels->email = $request->input("email");
+        $personnels->password = Hash::make($request->input("password"));
+        $personnels->role = $request->input("role");
+        if ($request->hasfile("images")) {
+            $file = $request->file("images");
             $extension = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extension;
-            $file->move('uploads/personnels/', $filename);
+            $filename = time() . "." . $extension;
+            $file->move("uploads/personnels/", $filename);
             $personnels->images = $filename;
         }
         $personnels->save();
-            return Redirect::to('login'); 
+        return Redirect::to("login");
     }
 
     /**
@@ -127,7 +127,7 @@ class personnelController extends Controller
     public function edit($personnel_id)
     {
         $personnels = Personnel::find($personnel_id);
-        return view('personnels.edit')->with('personnels', $personnels);
+        return view("personnels.edit")->with("personnels", $personnels);
     }
 
     /**
@@ -140,25 +140,26 @@ class personnelController extends Controller
     public function update(personnelUpdateController $request, $personnel_id)
     {
         $personnels = Personnel::find($personnel_id);
-        $personnels->full_name = $request->input('full_name');
-        $personnels->email = $request->input('email');
-        $personnels->password = Hash::make($request->input('password'));
-        $personnels->role = $request->input('role');
-        if($request->hasfile('images'))
-        {
-            $destination = 'uploads/personnels/'.$personnels->images;
-            if(File::exists($destination))
-            {
+        $personnels->full_name = $request->input("full_name");
+        $personnels->email = $request->input("email");
+        $personnels->password = Hash::make($request->input("password"));
+        $personnels->role = $request->input("role");
+        if ($request->hasfile("images")) {
+            $destination = "uploads/personnels/" . $personnels->images;
+            if (File::exists($destination)) {
                 File::delete($destination);
             }
-            $file = $request->file('images');
+            $file = $request->file("images");
             $extension = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extension;
-            $file->move('uploads/personnels/', $filename);
+            $filename = time() . "." . $extension;
+            $file->move("uploads/personnels/", $filename);
             $personnels->images = $filename;
         }
         $personnels->update();
-        return Redirect::to('personnel')->with('update','Personnel Data Updated!'); 
+        return Redirect::to("personnel")->with(
+            "update",
+            "Personnel Data Updated!"
+        );
     }
 
     /**
@@ -169,6 +170,19 @@ class personnelController extends Controller
      */
     public function destroy($personnel_id)
     {
+        $personnels = Personnel::findOrFail($personnel_id);
+        // $destination = 'uploads/personnels/'.$personnels->images;
+        //if(File::exists($destination))
+        //{
+        //  File::delete($destination);
+        // }
+        $personnels->delete();
+        return Redirect::to("personnel")->with(
+            "delete",
+            "Personnel Data Deleted!"
+        );
+    }
+
     public function restore($personnel_id)
     {
         Personnel::onlyTrashed()

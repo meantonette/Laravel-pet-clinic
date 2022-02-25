@@ -7,33 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Animal extends Model
 {
-
     public const VALIDATION_RULES = [
-        'animal_name' => [
-            'required',
-            'alpha',
-            'min:3',
-        ],
-        'age' => [
-            'required',
-            'numeric',
-            'min:1',
-            'max:20',
-        ],
-        'gender' => [
-            'required',
-            'alpha',
-        ],
-        'type' => [
-            'required',
-            'alpha',
-        ],
-        'images' => [
-            'required',
-            'image',
-            'mimes:jpg,png,jpeg,gif',
-            'max:5048',
-        ],
+        "animal_name" => ["required", "alpha", "min:3"],
+        "age" => ["required", "numeric", "min:1", "max:20"],
+        "gender" => ["required", "alpha"],
+        "type" => ["required", "alpha"],
+        "images" => ["required", "image", "mimes:jpg,png,jpeg,gif", "max:5048"],
     ];
 
     use HasFactory;
@@ -42,18 +21,23 @@ class Animal extends Model
 
     protected $dates = ["deleted_at"];
 
-    protected $primaryKey = 'animals_id';
+    protected $table = "animals";
 
-    protected $guarded = ['animals_id'];
+    protected $primaryKey = "animals_id";
 
-    public function rescuer(){
-        return $this->belongsTo('\App\Models\Rescuer','rescuer_id');
+    protected $guarded = ["animals_id"];
+
+    public function rescuer()
+    {
+        return $this->belongsTo("\App\Models\Rescuer", "rescuer_id");
     }
 
-    public function diseaseInjury(){
+    public function diseaseInjury()
+    {
         return $this->hasMany(DiseasInjury::class);
     }
-    public function adopter(){
+    public function adopter()
+    {
         return $this->hasMany(Adopter::class);
     }
 }

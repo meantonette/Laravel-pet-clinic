@@ -32,7 +32,7 @@ class animalController extends Controller
     public function create()
     {
         $rescuers = Rescuer::all();
-        return view('animals.create',['rescuers' => $rescuers]);
+        return view("animals.create", ["rescuers" => $rescuers]);
     }
 
     /**
@@ -43,22 +43,21 @@ class animalController extends Controller
      */
     public function store(animalRequest $request)
     {
-        $animals = new Animal;
-        $animals->animal_name = $request->input('animal_name');
-        $animals->age = $request->input('age');
-        $animals->gender = $request->input('gender');
-        $animals->type = $request->input('type');
-        $animals->rescuer_id = $request->input('rescuer_id');
-        if($request->hasfile('images'))
-        {
-            $file = $request->file('images');
+        $animals = new Animal();
+        $animals->animal_name = $request->input("animal_name");
+        $animals->age = $request->input("age");
+        $animals->gender = $request->input("gender");
+        $animals->type = $request->input("type");
+        $animals->rescuer_id = $request->input("rescuer_id");
+        if ($request->hasfile("images")) {
+            $file = $request->file("images");
             $extension = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extension;
-            $file->move('uploads/animals/', $filename);
+            $filename = time() . "." . $extension;
+            $file->move("uploads/animals/", $filename);
             $animals->images = $filename;
         }
         $animals->save();
-        return Redirect::to('/animals')->with('add','New Animal Added!'); 
+        return Redirect::to("/animals")->with("add", "New Animal Added!");
     }
 
     /**
@@ -82,9 +81,9 @@ class animalController extends Controller
     {
         $animals = Animal::find($animals_id);
         $rescuers = Rescuer::all();
-        return view('animals.edit',[
-            'animals' => $animals,
-            'rescuers' => $rescuers
+        return view("animals.edit", [
+            "animals" => $animals,
+            "rescuers" => $rescuers,
         ]);
     }
 
@@ -96,28 +95,26 @@ class animalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(animalRequest $request, $animals_id)
-    { 
+    {
         $animals = Animal::find($animals_id);
-        $animals->animal_name = $request->input('animal_name');
-        $animals->age = $request->input('age');
-        $animals->gender = $request->input('gender');
-        $animals->type = $request->input('type');
-        $animals->rescuer_id = $request->input('rescuer_id');
-        if($request->hasfile('images'))
-        {
-            $destination = 'uploads/animals/'.$animals->images;
-            if(File::exists($destination))
-            {
+        $animals->animal_name = $request->input("animal_name");
+        $animals->age = $request->input("age");
+        $animals->gender = $request->input("gender");
+        $animals->type = $request->input("type");
+        $animals->rescuer_id = $request->input("rescuer_id");
+        if ($request->hasfile("images")) {
+            $destination = "uploads/animals/" . $animals->images;
+            if (File::exists($destination)) {
                 File::delete($destination);
             }
-            $file = $request->file('images');
+            $file = $request->file("images");
             $extension = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extension;
-            $file->move('uploads/animals/', $filename);
+            $filename = time() . "." . $extension;
+            $file->move("uploads/animals/", $filename);
             $animals->images = $filename;
         }
         $animals->update();
-        return Redirect::to('/animals')->with('update','Animal Data Updated!'); 
+        return Redirect::to("/animals")->with("update", "Animal Data Updated!");
     }
 
     /**
@@ -128,6 +125,16 @@ class animalController extends Controller
      */
     public function destroy($animals_id)
     {
+        $animals = Animal::findOrFail($animals_id);
+        //$destination = 'uploads/animals/'.$animals->images;
+        //if(File::exists($destination))
+        //{
+        //  File::delete($destination);
+        //}
+        $animals->delete();
+        return Redirect::to("/animals")->with("delete", "Animal Data Deleted!");
+    }
+
     public function restore($animals_id)
     {
         Animal::onlyTrashed()

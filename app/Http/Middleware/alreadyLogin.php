@@ -16,8 +16,11 @@ class alreadyLogin
      */
     public function handle(Request $req, Closure $next)
     {
-        if(Session()->has('id') && (url('login')==$req->url() || url('personnel/create')==$req->url())
-        ){
+        if (
+            Session()->has("id") &&
+            (url("login") == $req->url() ||
+                url("personnel/create") == $req->url())
+        ) {
             return back();
         }
         return $next($req);

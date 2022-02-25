@@ -32,7 +32,7 @@ class adopterController extends Controller
     public function create()
     {
         $animals = Animal::all();
-        return view('adopters.create',['animals' => $animals]);
+        return view("adopters.create", ["animals" => $animals]);
     }
 
     /**
@@ -44,20 +44,19 @@ class adopterController extends Controller
     public function store(adopterRequest $request)
     {
         $adopters = new Adopter();
-        $adopters->first_name = $request->input('first_name');
-        $adopters->last_name = $request->input('last_name');
-        $adopters->phone_number = $request->input('phone_number');
-        $adopters->animals_id = $request->input('animals_id');
-        if($request->hasfile('images'))
-        {
-            $file = $request->file('images');
+        $adopters->first_name = $request->input("first_name");
+        $adopters->last_name = $request->input("last_name");
+        $adopters->phone_number = $request->input("phone_number");
+        $adopters->animals_id = $request->input("animals_id");
+        if ($request->hasfile("images")) {
+            $file = $request->file("images");
             $extension = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extension;
-            $file->move('uploads/adopters/', $filename);
+            $filename = time() . "." . $extension;
+            $file->move("uploads/adopters/", $filename);
             $adopters->images = $filename;
         }
         $adopters->save();
-            return Redirect::to('/adopter')->with('add','New Adopter Added!'); 
+        return Redirect::to("/adopter")->with("add", "New Adopter Added!");
     }
 
     /**
@@ -81,9 +80,9 @@ class adopterController extends Controller
     {
         $adopters = Adopter::find($adopter_id);
         $animals = Animal::all();
-        return view('adopters.edit',[
-            'animals' => $animals,
-            'adopters' => $adopters
+        return view("adopters.edit", [
+            "animals" => $animals,
+            "adopters" => $adopters,
         ]);
     }
 
@@ -97,25 +96,26 @@ class adopterController extends Controller
     public function update(adopterRequest $request, $adopter_id)
     {
         $adopters = Adopter::find($adopter_id);
-        $adopters->first_name = $request->input('first_name');
-        $adopters->last_name = $request->input('last_name');
-        $adopters->phone_number = $request->input('phone_number');
-        $adopters->animals_id = $request->input('animals_id');
-        if($request->hasfile('images'))
-        {
-            $destination = 'uploads/adopters/'.$adopters->images;
-            if(File::exists($destination))
-            {
+        $adopters->first_name = $request->input("first_name");
+        $adopters->last_name = $request->input("last_name");
+        $adopters->phone_number = $request->input("phone_number");
+        $adopters->animals_id = $request->input("animals_id");
+        if ($request->hasfile("images")) {
+            $destination = "uploads/adopters/" . $adopters->images;
+            if (File::exists($destination)) {
                 File::delete($destination);
             }
-            $file = $request->file('images');
+            $file = $request->file("images");
             $extension = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extension;
-            $file->move('uploads/adopters/', $filename);
+            $filename = time() . "." . $extension;
+            $file->move("uploads/adopters/", $filename);
             $adopters->images = $filename;
         }
         $adopters->update();
-        return Redirect::to('/adopter')->with('update','Adopter Data Updated!'); 
+        return Redirect::to("/adopter")->with(
+            "update",
+            "Adopter Data Updated!"
+        );
     }
 
     /**
@@ -126,6 +126,19 @@ class adopterController extends Controller
      */
     public function destroy($adopter_id)
     {
+        $adopters = Adopter::findOrFail($adopter_id);
+        //$destination = 'uploads/adopters/'.$adopters->images;
+        //if(File::exists($destination))
+        //{
+        //  File::delete($destination);
+        //}
+        $adopters->delete();
+        return Redirect::to("/adopter")->with(
+            "delete",
+            "Adopter Data Deleted!"
+        );
+    }
+
     public function restore($adopter_id)
     {
         Adopter::onlyTrashed()

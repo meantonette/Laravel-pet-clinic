@@ -30,7 +30,7 @@ class rescuerController extends Controller
      */
     public function create()
     {
-        return view('rescuers.create');
+        return view("rescuers.create");
     }
 
     /**
@@ -41,20 +41,19 @@ class rescuerController extends Controller
      */
     public function store(rescuerRequest $request)
     {
-        $rescuers = new Rescuer;
-        $rescuers->first_name = $request->input('first_name');
-        $rescuers->last_name = $request->input('last_name');
-        $rescuers->phone_number = $request->input('phone_number');
-        if($request->hasfile('images'))
-        {
-            $file = $request->file('images');
+        $rescuers = new Rescuer();
+        $rescuers->first_name = $request->input("first_name");
+        $rescuers->last_name = $request->input("last_name");
+        $rescuers->phone_number = $request->input("phone_number");
+        if ($request->hasfile("images")) {
+            $file = $request->file("images");
             $extension = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extension;
-            $file->move('uploads/rescuers/', $filename);
+            $filename = time() . "." . $extension;
+            $file->move("uploads/rescuers/", $filename);
             $rescuers->images = $filename;
         }
         $rescuers->save();
-            return Redirect::to('rescuer')->with('add','New Rescuer Added!'); 
+        return Redirect::to("rescuer")->with("add", "New Rescuer Added!");
     }
 
     /**
@@ -77,7 +76,7 @@ class rescuerController extends Controller
     public function edit($rescuer_id)
     {
         $rescuers = Rescuer::find($rescuer_id);
-        return view('rescuers.edit')->with('rescuers', $rescuers);
+        return view("rescuers.edit")->with("rescuers", $rescuers);
     }
 
     /**
@@ -90,24 +89,22 @@ class rescuerController extends Controller
     public function update(rescuerRequest $request, $rescuer_id)
     {
         $rescuers = Rescuer::find($rescuer_id);
-        $rescuers->first_name = $request->input('first_name');
-        $rescuers->last_name = $request->input('last_name');
-        $rescuers->phone_number = $request->input('phone_number');
-        if($request->hasfile('images'))
-        {
-            $destination = 'uploads/rescuers/'.$rescuers->images;
-            if(File::exists($destination))
-            {
+        $rescuers->first_name = $request->input("first_name");
+        $rescuers->last_name = $request->input("last_name");
+        $rescuers->phone_number = $request->input("phone_number");
+        if ($request->hasfile("images")) {
+            $destination = "uploads/rescuers/" . $rescuers->images;
+            if (File::exists($destination)) {
                 File::delete($destination);
             }
-            $file = $request->file('images');
+            $file = $request->file("images");
             $extension = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extension;
-            $file->move('uploads/rescuers/', $filename);
+            $filename = time() . "." . $extension;
+            $file->move("uploads/rescuers/", $filename);
             $rescuers->images = $filename;
         }
         $rescuers->update();
-        return Redirect::to('rescuer')->with('update','Rescuer Data Updated!'); 
+        return Redirect::to("rescuer")->with("update", "Rescuer Data Updated!");
     }
 
     /**
@@ -118,6 +115,16 @@ class rescuerController extends Controller
      */
     public function destroy($rescuer_id)
     {
+        $rescuers = Rescuer::findOrFail($rescuer_id);
+        //$destination = 'uploads/rescuers/'.$rescuers->images;
+        //if(File::exists($destination))
+        //{
+        //File::delete($destination);
+        //}
+        $rescuers->delete();
+        return Redirect::to("rescuer")->with("delete", "Rescuer Data Deleted!");
+    }
+
     public function restore($rescuer_id)
     {
         Rescuer::onlyTrashed()

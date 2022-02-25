@@ -7,12 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class DiseaseInjury extends Model
 {
-
     public const VALIDATION_RULES = [
-        'classify' => [
-            'required',
-            'alpha',
-        ],
+        "classify" => ["required", "alpha"],
     ];
 
     use HasFactory;
@@ -21,11 +17,14 @@ class DiseaseInjury extends Model
 
     protected $dates = ["deleted_at"];
 
-    protected $primaryKey = 'id';
+    protected $table = "disease_injuries";
 
-    protected $guarded = ['id'];
+    protected $primaryKey = "id";
 
-    public function animal(){
-        return $this->belongsTo('\App\Models\Animal','animals_id');
+    protected $guarded = ["id"];
+
+    public function animal()
+    {
+        return $this->belongsTo("\App\Models\Animal", "animals_id");
     }
 }

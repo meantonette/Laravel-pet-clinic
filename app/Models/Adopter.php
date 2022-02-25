@@ -7,28 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Adopter extends Model
 {
-
     public const VALIDATION_RULES = [
-        'first_name' => [
-            'required',
-            'alpha',
-            'min:3',
-        ],
-        'last_name' => [
-            'required',
-            'alpha',
-            'min:3',
-        ],
-        'phone_number' => [
-            'required',
-            'numeric',
-        ],
-        'images' => [
-            'required',
-            'image',
-            'mimes:jpg,png,jpeg,gif',
-            'max:5048',
-        ],
+        "first_name" => ["required", "alpha", "min:3"],
+        "last_name" => ["required", "alpha", "min:3"],
+        "phone_number" => ["required", "numeric"],
+        "images" => ["required", "image", "mimes:jpg,png,jpeg,gif", "max:5048"],
     ];
 
     use HasFactory;
@@ -37,11 +20,14 @@ class Adopter extends Model
 
     protected $dates = ["deleted_at"];
 
-    protected $primaryKey = 'adopter_id';
+    protected $table = "adopters";
 
-    protected $guarded = ['adopter_id'];
+    protected $primaryKey = "adopter_id";
 
-    public function animal(){
-        return $this->belongsTo('\App\Models\Animal','animals_id');
+    protected $guarded = ["adopter_id"];
+
+    public function animal()
+    {
+        return $this->belongsTo("\App\Models\Animal", "animals_id");
     }
 }
