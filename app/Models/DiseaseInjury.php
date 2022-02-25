@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class DiseaseInjury extends Model
 {
 
@@ -17,7 +17,9 @@ class DiseaseInjury extends Model
 
     use HasFactory;
 
-    protected $table = 'disease_injuries';
+    use SoftDeletes;
+
+    protected $dates = ["deleted_at"];
 
     protected $primaryKey = 'id';
 
