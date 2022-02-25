@@ -95,6 +95,7 @@
                 <p>No Personnel Data in the Database</p>
             @endforelse
         </table>
+        <div>{{ $personnels->links()}}</div>
     </div>
 </div>
 @endsection
