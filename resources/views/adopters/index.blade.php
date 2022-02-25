@@ -77,6 +77,22 @@
                 </button>
             {!! Form::close() !!}
           </td>
+          @if($adopter->deleted_at)
+          <td>
+              <a href="{{ route('adopter.restore', $adopter->adopter_id) }}" >
+                  <p class="text-center text-red-700 text-3xl bg-blue-600 p-2">
+                   Restore  &rarr;
+               </p>
+            </a>
+        </td>
+        @else
+        <td>
+            <a href="#"><p class="text-center text-3xl bg-blue-600 p-2">
+                   Restore  &rarr;
+               </p>
+            </a>
+        </td>
+        @endif
       </tr>
             @empty
                 <p>No Adopter Data in the Database</p>
