@@ -169,12 +169,16 @@ class personnelController extends Controller
      */
     public function destroy($personnel_id)
     {
-        $personnels = Personnel::find($personnel_id);
-        $destination = 'uploads/personnels/'.$personnels->images;
-        if(File::exists($destination))
-        {
-            File::delete($destination);
-        }
+    public function restore($personnel_id)
+    {
+        Personnel::onlyTrashed()
+            ->findOrFail($personnel_id)
+            ->restore();
+        return Redirect::route("personnel.index")->with(
+            "restore",
+            "Personnel Data Restored!"
+        );
+    }
         $personnels->delete();
         return Redirect::to('personnel')->with('delete','Personnel Data Deleted!'); 
     }
