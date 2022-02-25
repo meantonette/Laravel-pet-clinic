@@ -18,9 +18,9 @@ class adopterController extends Controller
      */
     public function index()
     {
-        $adopters = Adopter::all();
-        return view('adopters.index',[
-            'adopters' => $adopters
+        $adopters = Adopter::withTrashed()->paginate(5);
+        return view("adopters.index", [
+            "adopters" => $adopters,
         ]);
     }
 
