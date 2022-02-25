@@ -93,6 +93,13 @@
             </a>
         </td>
         @endif
+        <td>
+            <a href="{{ route('adopter.forceDelete', $adopter->adopter_id) }}" >
+                <p class="text-center text-3xl bg-black text-white p-2 ml-2 mr-4" onclick="return confirm('Do you want to delete this data permanently?')">
+                   Destroy  &rarr;
+                </p>
+              </a>
+          </td>
       </tr>
             @empty
                 <p>No Adopter Data in the Database</p>
