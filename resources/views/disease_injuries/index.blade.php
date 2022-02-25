@@ -93,6 +93,7 @@
                 <p>No Disease/Injury Data in the Database</p>
             @endforelse
         </table>
+        <div>{{ $disease_injuries->links()}}</div>
     </div>
 </div>
 @endsection
