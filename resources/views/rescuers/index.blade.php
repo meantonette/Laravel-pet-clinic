@@ -66,13 +66,11 @@
                </a>
           </td>
           <td class=" text-center">
-            <form action="/rescuer/{{ $rescuer->rescuer_id }}" method="POST">
-                @csrf
-                @method('delete')
+            {!! Form::open(array('route' => array('rescuer.destroy', $rescuer->rescuer_id),'method'=>'DELETE')) !!}
                 <button type="submit" class="text-center text-3xl bg-red-600 p-2">
                     Delete &rarr;
                 </button>
-           </form>
+            {!! Form::close() !!}
           </td>
       </tr>
             @empty
