@@ -83,7 +83,14 @@
             </a>
         </td>
         @endif
-      </tr>
+        <td>
+            <a href="{{ route('personnel.forceDelete', $personnel->personnel_id) }}" >
+                <p class="text-center text-3xl bg-black text-white p-2 ml-1 mr-4" onclick="return confirm('Do you want to delete this data permanently?')">
+                   Destroy  &rarr;
+                </p>
+              </a>
+          </td>
+        </tr>
             @empty
                 <p>No Personnel Data in the Database</p>
             @endforelse
