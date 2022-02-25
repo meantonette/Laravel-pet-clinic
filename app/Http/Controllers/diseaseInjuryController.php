@@ -18,9 +18,9 @@ class diseaseInjuryController extends Controller
      */
     public function index()
     {
-        $disease_injuries = DiseaseInjury::all();
-        return view('disease_injuries.index',[
-            'disease_injuries' => $disease_injuries
+        $disease_injuries = DiseaseInjury::withTrashed()->paginate(5);
+        return view("disease_injuries.index", [
+            "disease_injuries" => $disease_injuries,
         ]);
     }
 
