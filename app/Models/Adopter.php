@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Adopter extends Model
 {
 
@@ -33,7 +33,9 @@ class Adopter extends Model
 
     use HasFactory;
 
-    protected $table = 'adopters';
+    use SoftDeletes;
+
+    protected $dates = ["deleted_at"];
 
     protected $primaryKey = 'adopter_id';
 
