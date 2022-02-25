@@ -111,4 +111,15 @@ class diseaseInjuryController extends Controller
             "Disease/Injury Data Restored!"
         );
     }
+
+    public function forceDelete($id)
+    {
+        DiseaseInjury::withTrashed()
+            ->findOrFail($id)
+            ->forceDelete();
+        return Redirect::route("diseaseinjury.index")->with(
+            "force",
+            "Disease/Injury Data Permanently Deleted!"
+        );
+    }
 }
