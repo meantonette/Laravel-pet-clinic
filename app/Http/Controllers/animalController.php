@@ -128,12 +128,16 @@ class animalController extends Controller
      */
     public function destroy($animals_id)
     {
-        $animals = Animal::find($animals_id);
-        $destination = 'uploads/animals/'.$animals->images;
-        if(File::exists($destination))
-        {
-            File::delete($destination);
-        }
+    public function restore($animals_id)
+    {
+        Animal::onlyTrashed()
+            ->findOrFail($animals_id)
+            ->restore();
+        return Redirect::route("animals.index")->with(
+            "restore",
+            "Animal Data Restored!"
+        );
+    }
         $animals->delete();
         return Redirect::to('/animals')->with('delete','Animal Data Deleted!'); 
     }
