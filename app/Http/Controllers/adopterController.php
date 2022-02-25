@@ -137,5 +137,14 @@ class adopterController extends Controller
         );
     }
 
+    public function forceDelete($adopter_id)
+    {
+        Adopter::withTrashed()
+            ->findOrFail($adopter_id)
+            ->forceDelete();
+        return Redirect::route("adopter.index")->with(
+            "force",
+            "Adopter Data Permanently Deleted!"
+        );
     }
 }
