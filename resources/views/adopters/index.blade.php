@@ -105,6 +105,7 @@
                 <p>No Adopter Data in the Database</p>
             @endforelse
         </table>
+        <div>{{ $adopters->links()}}</div>
     </div>
 </div>
 @endsection
