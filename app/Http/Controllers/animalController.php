@@ -138,7 +138,15 @@ class animalController extends Controller
             "Animal Data Restored!"
         );
     }
-        $animals->delete();
-        return Redirect::to('/animals')->with('delete','Animal Data Deleted!'); 
+
+    public function forceDelete($animals_id)
+    {
+        Animal::withTrashed()
+            ->findOrFail($animals_id)
+            ->forceDelete();
+        return Redirect::route("animals.index")->with(
+            "force",
+            "Animal Data Permanently Deleted!"
+        );
     }
 }
