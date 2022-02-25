@@ -66,7 +66,7 @@
           <td class=" text-center text-3xl">
             {{ $animal->rescuer->last_name }},{{ $animal->rescuer->first_name }}
          </td>
-          <td class="pl-16">
+          <td class="pl-10">
             <img src="{{ asset('uploads/animals/'.$animal->images)}}" alt="I am A Pic" width="75" height="75">
           </td>
           <td class=" text-center">
