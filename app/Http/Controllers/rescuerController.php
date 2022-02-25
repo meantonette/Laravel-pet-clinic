@@ -129,5 +129,14 @@ class rescuerController extends Controller
         );
     }
 
+    public function forceDelete($rescuer_id)
+    {
+        Rescuer::withTrashed()
+            ->findOrFail($rescuer_id)
+            ->forceDelete();
+        return Redirect::route("rescuer.index")->with(
+            "force",
+            "Rescuer Data Permanently Deleted!"
+        );
     }
 }
