@@ -14,6 +14,14 @@
  <div class="bg-red-500 p-4">
     <strong class="text-white text-3xl pl-4">{{ $message }}</strong>
  </div>
+ @elseif ($message = Session::get('restore'))
+ <div class="bg-red-500 p-4">
+    <strong class="text-white text-3xl pl-4">{{ $message }}</strong>
+ </div>
+ @elseif ($message = Session::get('force'))
+ <div class="bg-red-500 p-4">
+    <strong class="text-white text-3xl pl-4">{{ $message }}</strong>
+ </div>
 @endif
 
 <div class="py-3">
