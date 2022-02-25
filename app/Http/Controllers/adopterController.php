@@ -126,13 +126,16 @@ class adopterController extends Controller
      */
     public function destroy($adopter_id)
     {
-        $adopters = Adopter::find($adopter_id);
-        $destination = 'uploads/adopters/'.$adopters->images;
-        if(File::exists($destination))
-        {
-            File::delete($destination);
-        }
-        $adopters->delete();
-        return Redirect::to('/adopter')->with('delete','Adopter Data Deleted!');
+    public function restore($adopter_id)
+    {
+        Adopter::onlyTrashed()
+            ->findOrFail($adopter_id)
+            ->restore();
+        return Redirect::route("adopter.index")->with(
+            "restore",
+            "Adopter Data Restored!"
+        );
+    }
+
     }
 }
