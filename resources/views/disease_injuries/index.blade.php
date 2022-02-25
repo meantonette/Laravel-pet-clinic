@@ -65,6 +65,22 @@
                 </button>
             {!! Form::close() !!}
           </td>
+          @if($disease_injury->deleted_at)
+          <td>
+              <a href="{{ route('diseaseinjury.restore', $disease_injury->id) }}" >
+                  <button class="text-center text-red-700 text-3xl bg-blue-600 p-2 ml-20">
+                   Restore  &rarr;
+               </button>
+            </a>
+        </td>
+        @else
+        <td>
+            <a href="#"><button class="text-center text-3xl bg-blue-600 p-2 ml-20">
+                   Restore  &rarr;
+               </button>
+            </a>
+        </td>
+        @endif
       </tr>
             @empty
                 <p>No Disease/Injury Data in the Database</p>
