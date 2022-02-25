@@ -109,6 +109,7 @@
                 <p>No Animals Data in the Database</p>
             @endforelse
         </table>
+        <div>{{ $animals->links()}}</div>
     </div>
 </div>
 @endsection
