@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string(column: 'phone_number');
             $table->string(column: 'images');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

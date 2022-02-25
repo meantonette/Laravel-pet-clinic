@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string(column: 'role');
             $table->string(column: 'images');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

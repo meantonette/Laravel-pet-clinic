@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string(column: 'classify');
             $table->unsignedInteger(column: 'animals_id');
             $table->timestamps();
-            $table->foreign('animals_id')->references('animals_id')->on('animals')->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string(column: 'images');
             $table->unsignedInteger(column: 'rescuer_id');
             $table->timestamps();
-            $table->foreign('rescuer_id')->references('rescuer_id')->on('rescuers')->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 
