@@ -57,7 +57,7 @@
           <td class=" text-center text-3xl">
                 {{ $rescuer->phone_number }}
           </td>
-          <td class="pl-24">
+          <td class="pl-16">
             <img src="{{ asset('uploads/rescuers/'.$rescuer->images)}}" alt="I am A Pic" width="75" height="75">
           </td>
           <td class=" text-center">
