@@ -118,13 +118,16 @@ class rescuerController extends Controller
      */
     public function destroy($rescuer_id)
     {
-        $rescuers = Rescuer::find($rescuer_id);
-        $destination = 'uploads/rescuers/'.$rescuers->images;
-        if(File::exists($destination))
-        {
-            File::delete($destination);
-        }
-        $rescuers->delete();
-        return Redirect::to('rescuer')->with('delete','Rescuer Data Deleted!'); 
+    public function restore($rescuer_id)
+    {
+        Rescuer::onlyTrashed()
+            ->findOrFail($rescuer_id)
+            ->restore();
+        return Redirect::route("rescuer.index")->with(
+            "restore",
+            "Rescuer Data Restored!"
+        );
+    }
+
     }
 }
