@@ -38,6 +38,7 @@
             <th class="w-screen text-3xl">Last Name</th>
             <th class="w-screen text-3xl">Phone Number</th>
             <th class="w-screen text-3xl">Rescuer Pic</th>
+            <th class="w-screen text-3xl">Rescued Animal</th>
             <th class="w-screen text-3xl">Update</th>
             <th class="w-screen text-3xl">Delete</th>
             <th class="w-screen text-3xl">Restore</th>
@@ -47,7 +48,7 @@
   @forelse ($rescuers as $rescuer)
       <tr>
         <td class=" text-center text-3xl">
-            {{ $rescuer->rescuer_id  }}
+            {{ $rescuer->rescuer_id }}
       </td>
           <td class=" text-center text-3xl">
                 {{ $rescuer->first_name }}
@@ -61,17 +62,22 @@
           <td class="pl-16">
             <img src="{{ asset('uploads/rescuers/'.$rescuer->images)}}" alt="I am A Pic" width="75" height="75">
           </td>
+          <td class=" text-center text-3xl">
+            {{ $rescuer->animal_name }}
+         </td>
           <td class=" text-center">
             <a href="rescuer/{{ $rescuer->rescuer_id }}/edit" class="text-center text-3xl bg-green-600 p-2">
                 Update &rarr; 
                </a>
           </td>
           <td class=" text-center">
-            {!! Form::open(array('route' => array('rescuer.destroy', $rescuer->rescuer_id),'method'=>'DELETE')) !!}
+            <form action="/rescuer/{{ $rescuer->rescuer_id }}" method="POST">
+                @csrf
+                @method('delete')
                 <button type="submit" class="text-center text-3xl bg-red-600 p-2">
                     Delete &rarr;
                 </button>
-            {!! Form::close() !!}
+           </form>
           </td>
           @if($rescuer->deleted_at)
           <td>
@@ -90,7 +96,7 @@
         </td>
         @endif
         <td>
-            <a href="{{ route('rescuer.forceDelete', $rescuer->rescuer_id) }}" >
+            <a href="/rescuer/forceDelete/{{ $rescuer->rescuer_id }}" >
                 <p class="text-center text-3xl bg-black text-white p-2 mx-4" onclick="return confirm('Do you want to delete this data permanently?')">
                    Destroy  &rarr;
                 </p>
@@ -101,7 +107,7 @@
                 <p>No Rescuer Data in the Database</p>
             @endforelse
         </table>
-        <div>{{ $rescuers->links()}}</div>
+
     </div>
 </div>
 @endsection

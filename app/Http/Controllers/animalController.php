@@ -6,9 +6,9 @@ use App\Models\Animal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\animalRequest;
 use App\Models\Rescuer;
-
 class animalController extends Controller
 {
     /**
@@ -18,7 +18,18 @@ class animalController extends Controller
      */
     public function index()
     {
-        $animals = Animal::withTrashed()->paginate(5);
+        //$animals = Animal::withTrashed()->paginate(5);
+        //return view("animals.index", [
+          //  "animals" => $animals,
+        //]);
+
+        
+        $animals = DB::table('rescuers')
+        ->leftJoin('animals','animal.rescuer_id','=','rescuer.rescuer_id')
+        ->select('rescuer.*','animals.*')
+        ->withTrashed()
+        ->paginate(5)
+        ->get();
         return view("animals.index", [
             "animals" => $animals,
         ]);
@@ -31,7 +42,7 @@ class animalController extends Controller
      */
     public function create()
     {
-        $rescuers = Rescuer::all();
+        $rescuers = Rescuer::pluck('first_name','rescuer_id');
         return view("animals.create", ["rescuers" => $rescuers]);
     }
 
@@ -80,7 +91,7 @@ class animalController extends Controller
     public function edit($animals_id)
     {
         $animals = Animal::find($animals_id);
-        $rescuers = Rescuer::all();
+        $rescuers = Rescuer::pluck('first_name','rescuer_id');
         return view("animals.edit", [
             "animals" => $animals,
             "rescuers" => $rescuers,

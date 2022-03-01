@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\rescuerRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use App\Models\Rescuer;
+use App\Models\Animal;
 
 class rescuerController extends Controller
 {
@@ -17,10 +19,20 @@ class rescuerController extends Controller
      */
     public function index()
     {
-        $rescuers = Rescuer::withTrashed()->paginate(5);
+        //$rescuers = Rescuer::withTrashed()->paginate(5);
+        //return view("rescuers.index", [
+        //    "rescuers" => $rescuers,
+        //]);
+
+        $rescuers = DB::table('rescuers')
+        ->leftJoin('animals','rescuers.rescuer_id','=','animals.rescuer_id')
+        ->select('rescuers.*','animals.*')
+        ->get();
+        //dd($rescuers);
         return view("rescuers.index", [
             "rescuers" => $rescuers,
         ]);
+
     }
 
     /**
