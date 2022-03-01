@@ -53,7 +53,7 @@
                 {{ $rescuer->first_name }}
           </td>
           <td class=" text-center text-3xl">
-                {{ $rescuer->last_name }}
+            <a href="rescuer/{{ $rescuer->rescuer_id }}/show">{{ $rescuer->last_name }}</a>
           </td>
           <td class=" text-center text-3xl">
                 {{ $rescuer->phone_number }}

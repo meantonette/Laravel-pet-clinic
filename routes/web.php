@@ -27,7 +27,8 @@ Route::get("/animals/forceDelete/{id}", [
     "as" => "animals.forceDelete",
 ]);
 
-Route::resource("/rescuer", rescuerController::class)->middleware("isLoggedIn");
+Route::resource('/rescuer', 'rescuerController')->middleware("isLoggedIn");
+//Route::resource("/rescuer", rescuerController::class)->middleware("isLoggedIn");
 Route::get("/rescuer/restore/{id}", [
     "uses" => "rescuerController@restore",
     "as" => "rescuer.restore",
