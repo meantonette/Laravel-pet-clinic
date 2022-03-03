@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\rescuerRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use App\Models\Rescuer;
+use App\Models\Animal;
 
 class rescuerController extends Controller
 {
@@ -21,6 +23,7 @@ class rescuerController extends Controller
         return view("rescuers.index", [
             "rescuers" => $rescuers,
         ]);
+
     }
 
     /**

@@ -6,9 +6,9 @@ use App\Models\Animal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\animalRequest;
 use App\Models\Rescuer;
-
 class animalController extends Controller
 {
     /**
