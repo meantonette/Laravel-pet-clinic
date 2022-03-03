@@ -19,16 +19,7 @@ class rescuerController extends Controller
      */
     public function index()
     {
-        //$rescuers = Rescuer::withTrashed()->paginate(5);
-        //return view("rescuers.index", [
-        //    "rescuers" => $rescuers,
-        //]);
-
-        $rescuers = DB::table('rescuers')
-        ->leftJoin('animals','rescuers.rescuer_id','=','animals.rescuer_id')
-        ->select('rescuers.*','animals.*')
-        ->get();
-        //dd($rescuers);
+        $rescuers = Rescuer::withTrashed()->paginate(5);
         return view("rescuers.index", [
             "rescuers" => $rescuers,
         ]);

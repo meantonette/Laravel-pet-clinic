@@ -18,18 +18,7 @@ class animalController extends Controller
      */
     public function index()
     {
-        //$animals = Animal::withTrashed()->paginate(5);
-        //return view("animals.index", [
-          //  "animals" => $animals,
-        //]);
-
-        
-        $animals = DB::table('rescuers')
-        ->leftJoin('animals','animal.rescuer_id','=','rescuer.rescuer_id')
-        ->select('rescuer.*','animals.*')
-        ->withTrashed()
-        ->paginate(5)
-        ->get();
+        $animals = Animal::withTrashed()->paginate(5);
         return view("animals.index", [
             "animals" => $animals,
         ]);
@@ -42,7 +31,7 @@ class animalController extends Controller
      */
     public function create()
     {
-        $rescuers = Rescuer::pluck('first_name','rescuer_id');
+        $rescuers = Rescuer::all();
         return view("animals.create", ["rescuers" => $rescuers]);
     }
 
@@ -91,7 +80,7 @@ class animalController extends Controller
     public function edit($animals_id)
     {
         $animals = Animal::find($animals_id);
-        $rescuers = Rescuer::pluck('first_name','rescuer_id');
+        $rescuers = Rescuer::all();
         return view("animals.edit", [
             "animals" => $animals,
             "rescuers" => $rescuers,

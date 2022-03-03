@@ -107,7 +107,7 @@
                 <p>No Rescuer Data in the Database</p>
             @endforelse
         </table>
-
+        <div>{{ $rescuers->links()}}</div>
     </div>
 </div>
 @endsection

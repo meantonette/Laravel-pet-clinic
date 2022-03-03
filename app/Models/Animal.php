@@ -36,8 +36,8 @@ class Animal extends Model
     {
         return $this->hasMany(DiseasInjury::class);
     }
-   // public function adopter()
-    //{
-      //  return $this->hasMany(Adopter::class);
-    //}
+    public function adopter()
+    {
+        return $this->hasMany(Adopter::class);
+    }
 }
