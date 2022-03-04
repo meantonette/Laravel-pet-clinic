@@ -22,12 +22,13 @@ class Rescuer extends Model
 
     protected $table = "rescuers";
 
-    protected $primaryKey = "rescuer_id";
+    protected $primaryKey = "id";
 
-    protected $guarded = ["rescuer_id"];
+    protected $guarded = ["id"];
 
-    public function Animal()
-    {
-        return $this->hasMany(Animal::class);
-    }
+    //public function Animal()
+    //{
+    //  return $this->hasMany(Animal::class);
+    //}
+
 }

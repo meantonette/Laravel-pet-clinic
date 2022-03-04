@@ -29,7 +29,7 @@ class personnelController extends Controller
         $check = Personnel::where("email", $req->email)->first();
         if ($check) {
             if (Hash::check($req->password, $check->password)) {
-                $req->session()->put("id", $check->personnel_id);
+                $req->session()->put("id", $check->id);
                 return redirect("dashboard");
             } else {
                 return view("personnels.login");
@@ -44,7 +44,7 @@ class personnelController extends Controller
         $personnel = [];
         if (Session::has("id")) {
             $personnel = Personnel::where(
-                "personnel_id",
+                "id",
                 Session::get("id")
             )->first();
         }
@@ -104,7 +104,10 @@ class personnelController extends Controller
             $personnels->images = $filename;
         }
         $personnels->save();
-        return Redirect::to("login");
+        return Redirect::to("login")->with(
+            "success",
+             "New Personnel Added!"
+        );
     }
 
     /**
@@ -124,9 +127,9 @@ class personnelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($personnel_id)
+    public function edit($id)
     {
-        $personnels = Personnel::find($personnel_id);
+        $personnels = Personnel::find($id);
         return view("personnels.edit")->with("personnels", $personnels);
     }
 
@@ -137,9 +140,9 @@ class personnelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(personnelUpdateController $request, $personnel_id)
+    public function update(personnelUpdateController $request, $id)
     {
-        $personnels = Personnel::find($personnel_id);
+        $personnels = Personnel::find($id);
         $personnels->full_name = $request->input("full_name");
         $personnels->email = $request->input("email");
         $personnels->password = Hash::make($request->input("password"));
@@ -157,7 +160,7 @@ class personnelController extends Controller
         }
         $personnels->update();
         return Redirect::to("personnel")->with(
-            "update",
+            "success",
             "Personnel Data Updated!"
         );
     }
@@ -168,39 +171,37 @@ class personnelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($personnel_id)
+    public function destroy($id)
     {
-        $personnels = Personnel::findOrFail($personnel_id);
-        // $destination = 'uploads/personnels/'.$personnels->images;
-        //if(File::exists($destination))
-        //{
-        //  File::delete($destination);
-        // }
-        $personnels->delete();
+        Personnel::destroy($id);
         return Redirect::to("personnel")->with(
-            "delete",
+            "success",
             "Personnel Data Deleted!"
         );
     }
 
-    public function restore($personnel_id)
+    public function restore($id)
     {
         Personnel::onlyTrashed()
-            ->findOrFail($personnel_id)
+            ->findOrFail($id)
             ->restore();
         return Redirect::route("personnel.index")->with(
-            "restore",
+            "success",
             "Personnel Data Restored!"
         );
     }
 
-    public function forceDelete($personnel_id)
+    public function forceDelete($id)
     {
-        Personnel::withTrashed()
-            ->findOrFail($personnel_id)
-            ->forceDelete();
+        $personnels = Personnel::findOrFail($id);
+        $destination = 'uploads/personnels/'.$personnels->images;
+         if(File::exists($destination))
+        {
+         File::delete($destination);
+        }
+        $personnels->forceDelete();
         return Redirect::route("personnel.index")->with(
-            "force",
+            "success",
             "Personnel Data Permanently Deleted!"
         );
     }

@@ -22,12 +22,12 @@ class Adopter extends Model
 
     protected $table = "adopters";
 
-    protected $primaryKey = "adopter_id";
+    protected $primaryKey = "id";
 
-    protected $guarded = ["adopter_id"];
+    protected $guarded = ["id"];
 
-    public function animal()
-    {
-        return $this->belongsTo("\App\Models\Animal", "animals_id");
-    }
+    //public function animal()
+    //{
+    //  return $this->belongsTo("\App\Models\Animal", "animals_id");
+    //}
 }

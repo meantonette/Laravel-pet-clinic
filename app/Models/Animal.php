@@ -23,21 +23,22 @@ class Animal extends Model
 
     protected $table = "animals";
 
-    protected $primaryKey = "animals_id";
+    protected $primaryKey = "id";
 
-    protected $guarded = ["animals_id"];
+    protected $guarded = ["id"];
 
-    public function rescuer()
-    {
-        return $this->belongsTo("\App\Models\Rescuer", "rescuer_id");
-    }
+    //public function rescuer()
+    //{
+    //  return $this->belongsTo("\App\Models\Rescuer", "rescuer_id");
+    //}
 
-    public function diseaseInjury()
-    {
-        return $this->hasMany(DiseasInjury::class);
-    }
-    public function adopter()
-    {
-        return $this->hasMany(Adopter::class);
-    }
+
+    //public function diseaseInjury()
+    //{
+    //  return $this->hasMany(DiseasInjury::class);
+    //}
+    // public function adopter()
+    //{
+    //  return $this->hasMany(Adopter::class);
+    //}
 }

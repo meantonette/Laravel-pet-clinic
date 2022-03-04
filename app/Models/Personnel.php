@@ -23,7 +23,7 @@ class Personnel extends Model
 
     protected $table = "personnels";
 
-    protected $primaryKey = "personnel_id";
+    protected $primaryKey = "id";
 
-    protected $guarded = ["personnel_id"];
+    protected $guarded = ["id"];
 }
