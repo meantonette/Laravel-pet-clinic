@@ -11,7 +11,7 @@
         <h1 class="pr-1 bg-yellow-600 border-yellow-600 border-4 text-black rounded-r-lg">Clinic</h1>
       </div>
     <nav>
-        <ul class="tracking-widest text-2xl">
+        <ul class="tracking-wide text-2xl">
             <button> <a href="{{ URL('dashboard') }}">
                     <h5>Home</h5>
                 </a></button>
