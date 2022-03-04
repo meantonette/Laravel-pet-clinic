@@ -22,12 +22,12 @@
                         @endif
                     </div>
 
-                    <label for="animals_id" class="text-lg">Animal Name</label>
-                    <select name="animals_id" id="animals_id" class="block shadow-5xl p-2 w-full">
-                        @foreach ($animals as $id => $animal)
-                        <option value="{{ $id }}">{{ $animal }}</option>
+                    <div class="inline">
+                        <label class="block text-lg pb-2">Animals</label>
+                        @foreach ($animals as $animals_id => $animal)
+                          {!!Form::label('animals', $animal,array('class'=>'inline-block w-1/12')) !!}
+                          {!! Form::checkbox('animals_id[]',$animals_id, null, array('class'=>'inline-block w-1/12','id'=>'animals')) !!}
                         @endforeach
-                    </select>
 
                     <div class="grid grid-cols-2 gap-2 w-full">
                         <button type="submit" class="bg-green-800 text-white font-bold p-2 mt-5">
