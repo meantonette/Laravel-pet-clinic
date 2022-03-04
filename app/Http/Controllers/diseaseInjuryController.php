@@ -18,9 +18,24 @@ class diseaseInjuryController extends Controller
      */
     public function index()
     {
-        $disease_injuries = DiseaseInjury::leftJoin("animal_disease_injury", "disease_injuries.id", "=", "animal_disease_injury.disease_injury_id")
-            ->leftJoin("animals", "animals.id", "=", "animal_disease_injury.animals_id")
-            ->select("disease_injuries.id", "disease_injuries.classify", "disease_injuries.deleted_at", "animals.animal_name")
+        $disease_injuries = DiseaseInjury::leftJoin(
+            "animal_disease_injury",
+            "disease_injuries.id",
+            "=",
+            "animal_disease_injury.disease_injury_id"
+        )
+            ->leftJoin(
+                "animals",
+                "animals.id",
+                "=",
+                "animal_disease_injury.animals_id"
+            )
+            ->select(
+                "disease_injuries.id",
+                "disease_injuries.classify",
+                "disease_injuries.deleted_at",
+                "animals.animal_name"
+            )
             ->orderBy("disease_injuries.id", "ASC")
             ->withTrashed()
             ->paginate(2);
@@ -51,12 +66,10 @@ class diseaseInjuryController extends Controller
         $disease_injuries = DiseaseInjury::create($request->all());
         if ($request->animals_id) {
             foreach ($request->animals_id as $animals_id) {
-                DB::table('animal_disease_injury')->insert(
-                    [
-                        'animals_id' => $animals_id,
-                        'disease_injury_id' => $disease_injuries->id
-                    ]
-                );
+                DB::table("animal_disease_injury")->insert([
+                    "animals_id" => $animals_id,
+                    "disease_injury_id" => $disease_injuries->id,
+                ]);
             }
         }
         return Redirect::to("/diseaseinjury")->with(
@@ -86,9 +99,9 @@ class diseaseInjuryController extends Controller
     {
         $disease_injuries = DiseaseInjury::find($id);
 
-        $animal_disease_injury = DB::table('animal_disease_injury')
-            ->where('disease_injury_id', $id)
-            ->pluck('animals_id')
+        $animal_disease_injury = DB::table("animal_disease_injury")
+            ->where("disease_injury_id", $id)
+            ->pluck("animals_id")
             ->toArray();
 
         $animals = Animal::pluck("animal_name", "id");
@@ -96,7 +109,7 @@ class diseaseInjuryController extends Controller
         return view("disease_injuries.edit", [
             "animals" => $animals,
             "disease_injuries" => $disease_injuries,
-            "animal_disease_injury" => $animal_disease_injury
+            "animal_disease_injury" => $animal_disease_injury,
         ]);
     }
 
@@ -113,19 +126,18 @@ class diseaseInjuryController extends Controller
         $animals_id = $request->animals_id;
 
         if (empty($animals_id)) {
-            DB::table('animal_disease_injury')
-                ->where('disease_injury_id', $id)
+            DB::table("animal_disease_injury")
+                ->where("disease_injury_id", $id)
                 ->delete();
         } else {
-            DB::table('animal_disease_injury')
-                ->where('disease_injury_id', $id)
+            DB::table("animal_disease_injury")
+                ->where("disease_injury_id", $id)
                 ->delete();
             foreach ($animals_id as $animal_id) {
-                DB::table('animal_disease_injury')
-                    ->insert([
-                        'animals_id' => $animal_id,
-                        'disease_injury_id' => $id
-                    ]);
+                DB::table("animal_disease_injury")->insert([
+                    "animals_id" => $animal_id,
+                    "disease_injury_id" => $id,
+                ]);
             }
         }
         $disease_injuries->update($request->all());

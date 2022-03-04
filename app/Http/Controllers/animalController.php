@@ -24,7 +24,7 @@ class animalController extends Controller
             "rescuers.id",
             "=",
             "animals.rescuer_id"
-            )
+        )
             ->join("adopters", "adopters.id", "=", "animals.adopter_id")
             ->select(
                 "rescuers.first_name",

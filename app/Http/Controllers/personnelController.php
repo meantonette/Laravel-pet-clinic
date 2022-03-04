@@ -43,10 +43,7 @@ class personnelController extends Controller
     {
         $personnel = [];
         if (Session::has("id")) {
-            $personnel = Personnel::where(
-                "id",
-                Session::get("id")
-            )->first();
+            $personnel = Personnel::where("id", Session::get("id"))->first();
         }
         return view("personnels.dashboard", compact("personnel"));
     }
@@ -104,10 +101,7 @@ class personnelController extends Controller
             $personnels->images = $filename;
         }
         $personnels->save();
-        return Redirect::to("login")->with(
-            "success",
-             "New Personnel Added!"
-        );
+        return Redirect::to("login")->with("success", "New Personnel Added!");
     }
 
     /**
@@ -194,10 +188,9 @@ class personnelController extends Controller
     public function forceDelete($id)
     {
         $personnels = Personnel::findOrFail($id);
-        $destination = 'uploads/personnels/'.$personnels->images;
-         if(File::exists($destination))
-        {
-         File::delete($destination);
+        $destination = "uploads/personnels/" . $personnels->images;
+        if (File::exists($destination)) {
+            File::delete($destination);
         }
         $personnels->forceDelete();
         return Redirect::route("personnel.index")->with(

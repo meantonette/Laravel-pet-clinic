@@ -19,7 +19,7 @@ class DiseaseInjury extends Model
 
     protected $table = "disease_injuries";
 
-    protected $fillable = ['classify'];
+    protected $fillable = ["classify"];
 
     protected $primaryKey = "id";
 

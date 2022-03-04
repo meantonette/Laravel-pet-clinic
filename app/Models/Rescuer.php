@@ -30,5 +30,4 @@ class Rescuer extends Model
     //{
     //  return $this->hasMany(Animal::class);
     //}
-
 }

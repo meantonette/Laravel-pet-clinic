@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -63,19 +62,19 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('animal_disease_injury', function (Blueprint $table) {
-            $table->integer('animals_id')->unsigned();
+        Schema::create("animal_disease_injury", function (Blueprint $table) {
+            $table->integer("animals_id")->unsigned();
             $table
-            ->foreign('animals_id')
-            ->references('id')
-            ->on('animals')
-            ->onDelete("cascade");
-            $table->integer('disease_injury_id')->unsigned();
+                ->foreign("animals_id")
+                ->references("id")
+                ->on("animals")
+                ->onDelete("cascade");
+            $table->integer("disease_injury_id")->unsigned();
             $table
-            ->foreign('disease_injury_id')
-            ->references('id')
-            ->on('disease_injuries')
-            ->onDelete("cascade");
+                ->foreign("disease_injury_id")
+                ->references("id")
+                ->on("disease_injuries")
+                ->onDelete("cascade");
         });
     }
 
