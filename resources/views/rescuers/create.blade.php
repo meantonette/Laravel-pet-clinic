@@ -17,6 +17,7 @@
                     <label for="first_name" class="text-lg">First Name</label>
                     <input type="text"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="first_name"
                     name="first_name"
                     placeholder="First Name"
                     value="{{old('first_name')}}">
@@ -29,6 +30,7 @@
                     <label for="last_name" class="text-lg">Last Name</label>
                     <input type="text"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="last_name"
                     name="last_name"
                     placeholder="Last Name"
                     value="{{old('last_name')}}">
@@ -41,6 +43,7 @@
                    <label for="phone_number" class="text-lg"r">Phone Number</label>
                    <input type="text"
                    class="block shadow-5xl p-2 my-5 w-full"
+                   id="phone_number"
                    name="phone_number"
                    placeholder="phone_number"
                    value="{{old('phone_number')}}">
@@ -50,15 +53,16 @@
                    </div>
 
                    <div>
-                   <label for="images" class="text-lg">Rescuer Pic</label>
-                   <input type="file"
-                   class="block shadow-5xl p-2 w-full"
-                   name="images"
-                   value="{{old('images')}}">
-                   @if($errors->has('images'))
-                   <p class="text-center text-red-500">{{ $errors->first('images') }}</p>
-                   @endif 
-                   </div>
+                    <label for="images" class="text-lg">Rescuer Pic</label>
+                    <input type="file"
+                    class="block shadow-5xl p-2 w-full"
+                    id="images"
+                    name="images"
+                    value="{{old('images')}}">
+                    @if($errors->has('images'))
+                    <p class="text-center text-red-500">{{ $errors->first('images') }}</p>
+                    @endif 
+                    </div>
                    
                     <div class="grid grid-cols-2 gap-2 w-full">
                     <button type="submit" class="bg-green-800 text-white font-bold p-2 mt-5">
