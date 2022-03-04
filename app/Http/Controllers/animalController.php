@@ -24,18 +24,11 @@ class animalController extends Controller
             "rescuers.id",
             "=",
             "animals.rescuer_id"
-        )
-            ->join("adopters", "adopters.id", "=", "animals.adopter_id")
-            ->leftJoin(
-                "disease_injuries",
-                "animals.id",
-                "=",
-                "disease_injuries.animals_id"
             )
+            ->join("adopters", "adopters.id", "=", "animals.adopter_id")
             ->select(
                 "rescuers.first_name",
                 "adopters.first_name as fname",
-                "disease_injuries.classify",
                 "animals.id",
                 "animals.animal_name",
                 "animals.age",
