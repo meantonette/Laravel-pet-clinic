@@ -9,7 +9,8 @@
     <title>Log In</title>
 </head>
 
-<body style="background-image:linear-gradient(rgba(212, 212, 212, 0.1),rgba(212,212,212,0.1)), url(https://wallpapercave.com/wp/B1sODrM.jpg); background-size:cover;">
+<body
+    style="background-image:linear-gradient(rgba(212, 212, 212, 0.1),rgba(212,212,212,0.1)), url(https://wallpapercave.com/wp/B1sODrM.jpg); background-size:cover;">
     @if ($message = Session::get('success'))
     <div class="bg-red-500 p-4">
         <strong class="text-white text-3xl pl-4">{{ $message }}</strong>
