@@ -9,27 +9,30 @@
     </div>
     <div>
         <div class="flex justify-center pt-4">
-            <form action="/diseaseinjury/{{ $disease_injuries->id }}" method="POST">
-                @csrf
-                @method('PUT')
+            {!! Form::model($disease_injuries,['method'=>'PUT','route' => ['diseaseinjury.update',$disease_injuries->id]]) !!}
                 <div class="block">
 
                     <div>
                         <label for="classify" class="text-lg">Classify</label>
-                        <input type="text" class="block shadow-5xl p-2 my-5 w-full" id="classify" name="classify"
-                            value="{{ $disease_injuries->classify }}">
+                           {!! Form::text('classify',$disease_injuries->classify,array('class' => 
+                           'block shadow-5xl p-2 my-5 w-full')) !!}
                         @if($errors->has('classify'))
                         <p class="text-center text-red-500">{{ $errors->first('classify') }}</p>
                         @endif
                     </div>
 
                     <div>
-                        <label for="animals_id" class="text-lg">Type</label>
-                        {!! Form::select('animals_id',$animals, $disease_injuries->animals_id,['class' => 'block
-                        shadow-5xl p-2 my-5 w-full']) !!}
-                        @if($errors->has('animals_id'))
-                        <p class="text-center text-red-500">{{ $errors->first('animals_id') }}</p>
+                        <label class="block text-lg pb-2">Animals</label>
+                        @foreach ($animals as $animals_id => $animal)
+                        <div class="inline">
+                        @if (in_array($animals_id, $animal_disease_injury))
+                        {!!Form::label('animals', $animal,array('class'=>'inline-block w-1/12')) !!}
+                        {!! Form::checkbox('animals_id[]',$animals_id, true, array('class'=>'inline-block w-1/12','animals_id'=>'animals')) !!}
+                        @else
+                        {!!Form::label('animals', $animal,array('class'=>'inline-block w-1/12')) !!}
+                        {!! Form::checkbox('animals_id[]',$animals_id, null, array('class'=>'inline-block w-1/12','id'=>'animals')) !!}
                         @endif
+                        @endforeach
                     </div>
 
                     <div class="grid grid-cols-2 gap-2 w-full">
@@ -40,6 +43,6 @@
                             role="button">Cancel</a>
                     </div>
                 </div>
-            </form>
+                {!! Form::close() !!}
         </div>
         @endsection
