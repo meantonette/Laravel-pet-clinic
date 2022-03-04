@@ -17,6 +17,7 @@
                     <label for="full_name" class="text-lg">Full Name</label>
                     <input type="text"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="full_name"
                     name="full_name"
                     value="{{ $personnels->full_name }}">
                     @if($errors->has('full_name'))
@@ -28,6 +29,7 @@
                     <label for="email" class="text-lg">Email</label>
                     <input type="text"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="email"
                     name="email"
                     value="{{ $personnels->email }}">
                     @if($errors->has('email'))
@@ -39,6 +41,7 @@
                     <label for="password" class="text-lg">Password</label>
                     <input type="password"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="password"
                     name="password"
                     value="{{old('password')}}">
                     @if($errors->has('password'))
@@ -49,9 +52,9 @@
                     <div>
                     <label for="role" class="text-lg">Pick Your Role</label>
                     <select name="role" class="block shadow-5xl p-2 my-5 w-full" value="{{ $personnels->role }}">
-                      <option>Employee</option>
-                      <option>Veterinarian</option>
-                      <option>Volunteer</option>
+                        <option>Employee</option>
+                        <option>Veterinarian</option>
+                        <option>Volunteer</option>
                     </select>
                     @if($errors->has('role'))
                     <p class="text-center text-red-500">{{ $errors->first('role') }}</p>
@@ -62,6 +65,7 @@
                     <label for="images" class="text-lg">Personnel Pic</label>
                     <input type="file"
                     class="block shadow-5xl p-2 w-full"
+                    id="full_name"
                     name="images">
                     <img src="{{ asset('uploads/personnels/'.$personnels->images)}}" alt="I am A Pic" width="100" height="100" class="ml-24 pb-2">
                     @if($errors->has('images'))

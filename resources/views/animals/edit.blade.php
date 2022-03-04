@@ -4,22 +4,16 @@
 <div class="pb-20 my-5">
     <div class="text-center">
         <h1 class="text-5xl">
-            Update Animal
+            Update Animals
         </h1>
     </div>
 <div>
         <div class="flex justify-center pt-4">
-            <form action="/animals/{{ $animals->animals_id }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
+            {{ Form::model($animals,['route' => ['animals.update',$animals->id],'method'=>'PUT', 'enctype'=>'multipart/form-data']) }}
                 <div class="block">
-
                     <div>
                     <label for="animal_name" class="text-lg">Animal Name</label>
-                    <input type="text"
-                    class="block shadow-5xl p-2 my-5 w-full"
-                    name="animal_name"
-                    value="{{ $animals->animal_name }}">
+                    {{ Form::text('animal_name',null,array('class'=>'block shadow-5xl p-2 my-5 w-full','id'=>'animal_name')) }}
                     @if($errors->has('animal_name'))
                     <p class="text-center text-red-500">{{ $errors->first('animal_name') }}</p>
                     @endif 
@@ -27,10 +21,7 @@
 
                     <div>
                     <label for="age" class="text-lg">Age</label>
-                    <input type="text"
-                    class="block shadow-5xl p-2 my-5 w-full"
-                    name="age"
-                    value="{{ $animals->age }}">
+                    {{ Form::text('age',null,array('class'=>'block shadow-5xl p-2 my-5 w-full','id'=>'age')) }}
                     @if($errors->has('age'))
                     <p class="text-center text-red-500">{{ $errors->first('age') }}</p>
                     @endif 
@@ -38,10 +29,7 @@
 
                     <div>
                     <label for="gender" class="text-lg">Gender</label>
-                    <input type="text"
-                    class="block shadow-5xl p-2 my-5 w-full"
-                    name="gender"
-                    value="{{ $animals->gender }}">
+                    {{ Form::text('gender',null,array('class'=>'block shadow-5xl p-2 my-5 w-full','id'=>'gender')) }}
                     @if($errors->has('gender'))
                     <p class="text-center text-red-500">{{ $errors->first('gender') }}</p>
                     @endif 
@@ -49,32 +37,36 @@
 
                     <div>
                     <label for="type" class="text-lg">Type</label>
-                    <input type="text"
-                    class="block shadow-5xl p-2 my-5 w-full"
-                    name="type"
-                    value="{{ $animals->type }}">
+                    {{ Form::text('type',null,array('class'=>'block shadow-5xl p-2 my-5 w-full','id'=>'type')) }}
                     @if($errors->has('type'))
                     <p class="text-center text-red-500">{{ $errors->first('type') }}</p>
                     @endif 
                     </div>
 
                     <div>
-                    <label for="images" class="text-lg">Animal Pic</label>
-                    <input type="file"
-                    class="block shadow-5xl p-2 w-full"
-                    name="images">
-                    <img src="{{ asset('uploads/animals/'.$animals->images)}}" alt="I am A Pic" width="100" height="100" class="ml-24 pb-2">
+                    <label for="images" class="block text-lg pb-3">Adopter Pic</label>
+                    {{ Form::file('images',null,array('class'=>'block shadow-5xl p-2 my-5 w-full','id'=>'images')) }}
+                    <img src="{{ asset('uploads/animals/'.$animals->images)}}" alt="I am A Pic" width="100" height="100" class="ml-24 py-2">
                     @if($errors->has('images'))
                     <p class="text-center text-red-500">{{ $errors->first('images') }}</p>
                     @endif 
                     </div>
 
-                    <label for="rescuer_id" class="text-lg">Rescuer</label>
-                    <select name="rescuer_id" id="rescuer_id" class="block shadow-5xl p-2 w-full">
-                        @foreach ($rescuers as $rescuer)
-                            <option value="{{ $rescuer->rescuer_id }}">{{ $rescuer->last_name }},{{ $rescuer->first_name }}</option>
-                        @endforeach
-                    </select>
+                    <div>
+                    <label for="rescuer_id" class="text-lg">Type</label>
+                    {!! Form::select('rescuer_id',$rescuers, $animals->rescuer_id,['class' => 'block shadow-5xl p-2 my-5 w-full']) !!}
+                    @if($errors->has('rescuer_id'))
+                    <p class="text-center text-red-500">{{ $errors->first('rescuer_id') }}</p>
+                    @endif 
+                    </div>
+
+                    <div>
+                    <label for="adopter_id" class="text-lg">Type</label>
+                    {!! Form::select('adopter_id',$adopters, $animals->adopter_id,['class' => 'block shadow-5xl p-2 my-5 w-full']) !!}
+                    @if($errors->has('adopter_id'))
+                    <p class="text-center text-red-500">{{ $errors->first('adopter_id') }}</p>
+                    @endif 
+                    </div>
 
                     <div class="grid grid-cols-2 gap-2 w-full">
                         <button type="submit" class="bg-green-800 text-white font-bold p-2 mt-5">

@@ -18,6 +18,7 @@
                     <label for="classify" class="text-lg">Classify</label>
                     <input type="text"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="classify"
                     name="classify"
                     value="{{ $disease_injuries->classify }}">
                     @if($errors->has('classify'))
@@ -25,12 +26,13 @@
                     @endif 
                     </div>
 
-                    <label for="animals_id" class="text-lg">Animal Name</label>
-                    <select name="animals_id" id="animals_id" class="block shadow-5xl p-2 w-full">
-                        @foreach ($animals as $animal)
-                            <option value="{{ $animal->animals_id }}">{{ $animal->animal_name }}</option>
-                        @endforeach
-                    </select>
+                    <div>
+                    <label for="animals_id" class="text-lg">Type</label>
+                    {!! Form::select('animals_id',$animals, $disease_injuries->animals_id,['class' => 'block shadow-5xl p-2 my-5 w-full']) !!}
+                    @if($errors->has('animals_id'))
+                    <p class="text-center text-red-500">{{ $errors->first('animals_id') }}</p>
+                    @endif 
+                    </div>
 
                     <div class="grid grid-cols-2 gap-2 w-full">
                         <button type="submit" class="bg-green-800 text-white font-bold p-2 mt-5">
