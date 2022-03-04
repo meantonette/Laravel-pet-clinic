@@ -2,23 +2,7 @@
 
 @section('contents')
 
-@if ($message = Session::get('add'))
- <div class="bg-red-500 p-4">
-    <strong class="text-white text-3xl pl-4">{{ $message }}</strong>
- </div>
- @elseif ($message = Session::get('update'))
- <div class="bg-red-500 p-4">
-    <strong class="text-white text-3xl pl-4">{{ $message }}</strong>
- </div>
- @elseif ($message = Session::get('delete'))
- <div class="bg-red-500 p-4">
-    <strong class="text-white text-3xl pl-4">{{ $message }}</strong>
- </div>
- @elseif ($message = Session::get('restore'))
- <div class="bg-red-500 p-4">
-    <strong class="text-white text-3xl pl-4">{{ $message }}</strong>
- </div>
- @elseif ($message = Session::get('force'))
+@if ($message = Session::get('success'))
  <div class="bg-red-500 p-4">
     <strong class="text-white text-3xl pl-4">{{ $message }}</strong>
  </div>
@@ -51,7 +35,7 @@
                 {{ $disease_injury->classify }}
           </td>
           <td class=" text-center text-3xl">
-            {{ $disease_injury->animal->animal_name }}
+            {{ $disease_injury->animal_name }}
          </td>
           <td class=" text-center">
             <a href="diseaseinjury/{{ $disease_injury->id }}/edit" class="text-center text-3xl bg-green-600 p-2">
@@ -93,7 +77,7 @@
                 <p>No Disease/Injury Data in the Database</p>
             @endforelse
         </table>
-        <div>{{ $disease_injuries->links()}}</div>
+        <div class="pt-6 px-4">{{ $disease_injuries->links()}}</div>
     </div>
 </div>
 @endsection
