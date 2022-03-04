@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
+use App\Models\Rescuer;
+use App\Models\Adopter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\animalRequest;
-use App\Models\Rescuer;
 class animalController extends Controller
 {
     /**
@@ -18,21 +19,36 @@ class animalController extends Controller
      */
     public function index()
     {
-        //$animals = Animal::withTrashed()->paginate(5);
-        //return view("animals.index", [
-          //  "animals" => $animals,
-        //]);
-
-        
-        $animals = DB::table('rescuers')
-        ->leftJoin('animals','animal.rescuer_id','=','rescuer.rescuer_id')
-        ->select('rescuer.*','animals.*')
-        ->withTrashed()
-        ->paginate(5)
-        ->get();
-        return view("animals.index", [
-            "animals" => $animals,
-        ]);
+        $animals = Animal::join(
+            "rescuers",
+            "rescuers.id",
+            "=",
+            "animals.rescuer_id"
+        )
+            ->join("adopters", "adopters.id", "=", "animals.adopter_id")
+            ->leftJoin(
+                "disease_injuries",
+                "animals.id",
+                "=",
+                "disease_injuries.animals_id"
+            )
+            ->select(
+                "rescuers.first_name",
+                "adopters.first_name as fname",
+                "disease_injuries.classify",
+                "animals.id",
+                "animals.animal_name",
+                "animals.age",
+                "animals.gender",
+                "animals.type",
+                "animals.images",
+                "animals.rescuer_id",
+                "animals.deleted_at"
+            )
+            ->orderBy("animals.id", "ASC")
+            ->withTrashed()
+            ->paginate(2);
+        return view("animals.index", ["animals" => $animals]);
     }
 
     /**
@@ -42,8 +58,12 @@ class animalController extends Controller
      */
     public function create()
     {
-        $rescuers = Rescuer::pluck('first_name','rescuer_id');
-        return view("animals.create", ["rescuers" => $rescuers]);
+        $rescuers = Rescuer::pluck("first_name", "id");
+        $adopters = Adopter::pluck("first_name", "id");
+        return view("animals.create", [
+            "rescuers" => $rescuers,
+            "adopters" => $adopters,
+        ]);
     }
 
     /**
@@ -60,6 +80,7 @@ class animalController extends Controller
         $animals->gender = $request->input("gender");
         $animals->type = $request->input("type");
         $animals->rescuer_id = $request->input("rescuer_id");
+        $animals->adopter_id = $request->input("adopter_id");
         if ($request->hasfile("images")) {
             $file = $request->file("images");
             $extension = $file->getClientOriginalExtension();
@@ -68,7 +89,7 @@ class animalController extends Controller
             $animals->images = $filename;
         }
         $animals->save();
-        return Redirect::to("/animals")->with("add", "New Animal Added!");
+        return Redirect::to("/animals")->with("success", "New Animal Added!");
     }
 
     /**
@@ -88,13 +109,15 @@ class animalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($animals_id)
+    public function edit($id)
     {
-        $animals = Animal::find($animals_id);
-        $rescuers = Rescuer::pluck('first_name','rescuer_id');
+        $animals = Animal::find($id);
+        $rescuers = Rescuer::pluck("first_name", "id");
+        $adopters = Adopter::pluck("first_name", "id");
         return view("animals.edit", [
             "animals" => $animals,
             "rescuers" => $rescuers,
+            "adopters" => $adopters,
         ]);
     }
 
@@ -105,14 +128,15 @@ class animalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(animalRequest $request, $animals_id)
+    public function update(animalRequest $request, $id)
     {
-        $animals = Animal::find($animals_id);
+        $animals = Animal::find($id);
         $animals->animal_name = $request->input("animal_name");
         $animals->age = $request->input("age");
         $animals->gender = $request->input("gender");
         $animals->type = $request->input("type");
         $animals->rescuer_id = $request->input("rescuer_id");
+        $animals->adopter_id = $request->input("adopter_id");
         if ($request->hasfile("images")) {
             $destination = "uploads/animals/" . $animals->images;
             if (File::exists($destination)) {
@@ -125,7 +149,10 @@ class animalController extends Controller
             $animals->images = $filename;
         }
         $animals->update();
-        return Redirect::to("/animals")->with("update", "Animal Data Updated!");
+        return Redirect::to("/animals")->with(
+            "success",
+            "Animal Data Updated!"
+        );
     }
 
     /**
@@ -134,36 +161,36 @@ class animalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($animals_id)
+    public function destroy($id)
     {
-        $animals = Animal::findOrFail($animals_id);
-        //$destination = 'uploads/animals/'.$animals->images;
-        //if(File::exists($destination))
-        //{
-        //  File::delete($destination);
-        //}
-        $animals->delete();
-        return Redirect::to("/animals")->with("delete", "Animal Data Deleted!");
+        Animal::destroy($id);
+        return Redirect::to("/animals")->with(
+            "success",
+            "Animal Data Deleted!"
+        );
     }
 
-    public function restore($animals_id)
+    public function restore($id)
     {
         Animal::onlyTrashed()
-            ->findOrFail($animals_id)
+            ->findOrFail($id)
             ->restore();
         return Redirect::route("animals.index")->with(
-            "restore",
+            "success",
             "Animal Data Restored!"
         );
     }
 
-    public function forceDelete($animals_id)
+    public function forceDelete($id)
     {
-        Animal::withTrashed()
-            ->findOrFail($animals_id)
-            ->forceDelete();
+        $animals = Animal::findOrFail($id);
+        $destination = "uploads/animals/" . $animals->images;
+        if (File::exists($destination)) {
+            File::delete($destination);
+        }
+        $animals->forceDelete();
         return Redirect::route("animals.index")->with(
-            "force",
+            "success",
             "Animal Data Permanently Deleted!"
         );
     }

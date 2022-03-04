@@ -6,9 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\rescuerRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use App\Models\Rescuer;
-use App\Models\Animal;
 
 class rescuerController extends Controller
 {
@@ -19,20 +18,26 @@ class rescuerController extends Controller
      */
     public function index()
     {
-        //$rescuers = Rescuer::withTrashed()->paginate(5);
-        //return view("rescuers.index", [
-        //    "rescuers" => $rescuers,
-        //]);
-
-        $rescuers = DB::table('rescuers')
-        ->leftJoin('animals','rescuers.rescuer_id','=','animals.rescuer_id')
-        ->select('rescuers.*','animals.*')
-        ->get();
-        //dd($rescuers);
-        return view("rescuers.index", [
-            "rescuers" => $rescuers,
-        ]);
-
+        $rescuers = Rescuer::leftJoin(
+            "animals",
+            "rescuers.id",
+            "=",
+            "animals.rescuer_id"
+        )
+            ->select(
+                "rescuers.id",
+                "rescuers.first_name",
+                "rescuers.last_name",
+                "rescuers.phone_number",
+                "rescuers.images",
+                "rescuers.deleted_at",
+                "animals.animal_name"
+            )
+            ->orderBy("rescuers.id", "ASC")
+            ->withTrashed()
+            ->paginate(2);
+        return view("rescuers.index", ["rescuers" => $rescuers]);
+        //return view("rescuers.index", compact("rescuers"));
     }
 
     /**
@@ -42,7 +47,7 @@ class rescuerController extends Controller
      */
     public function create()
     {
-        return view("rescuers.create");
+        return View::make("rescuers.create");
     }
 
     /**
@@ -65,7 +70,7 @@ class rescuerController extends Controller
             $rescuers->images = $filename;
         }
         $rescuers->save();
-        return Redirect::to("rescuer")->with("add", "New Rescuer Added!");
+        return Redirect::to("rescuer")->with("success", "New Rescuer Added!");
     }
 
     /**
@@ -85,10 +90,10 @@ class rescuerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($rescuer_id)
+    public function edit($id)
     {
-        $rescuers = Rescuer::find($rescuer_id);
-        return view("rescuers.edit")->with("rescuers", $rescuers);
+        $rescuers = Rescuer::find($id);
+        return View::make("rescuers.edit", compact("rescuers"));
     }
 
     /**
@@ -98,9 +103,9 @@ class rescuerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(rescuerRequest $request, $rescuer_id)
+    public function update(rescuerRequest $request, $id)
     {
-        $rescuers = Rescuer::find($rescuer_id);
+        $rescuers = Rescuer::find($id);
         $rescuers->first_name = $request->input("first_name");
         $rescuers->last_name = $request->input("last_name");
         $rescuers->phone_number = $request->input("phone_number");
@@ -116,7 +121,10 @@ class rescuerController extends Controller
             $rescuers->images = $filename;
         }
         $rescuers->update();
-        return Redirect::to("rescuer")->with("update", "Rescuer Data Updated!");
+        return Redirect::to("rescuer")->with(
+            "success",
+            "Rescuer Data Updated!"
+        );
     }
 
     /**
@@ -125,36 +133,36 @@ class rescuerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($rescuer_id)
+    public function destroy($id)
     {
-        $rescuers = Rescuer::findOrFail($rescuer_id);
-        //$destination = 'uploads/rescuers/'.$rescuers->images;
-        //if(File::exists($destination))
-        //{
-        //File::delete($destination);
-        //}
-        $rescuers->delete();
-        return Redirect::to("rescuer")->with("delete", "Rescuer Data Deleted!");
+        Rescuer::destroy($id);
+        return Redirect::to("rescuer")->with(
+            "success",
+            "Rescuer Data Deleted!"
+        );
     }
 
-    public function restore($rescuer_id)
+    public function restore($id)
     {
         Rescuer::onlyTrashed()
-            ->findOrFail($rescuer_id)
+            ->findOrFail($id)
             ->restore();
         return Redirect::route("rescuer.index")->with(
-            "restore",
+            "success",
             "Rescuer Data Restored!"
         );
     }
 
-    public function forceDelete($rescuer_id)
+    public function forceDelete($id)
     {
-        Rescuer::withTrashed()
-            ->findOrFail($rescuer_id)
-            ->forceDelete();
+        $rescuers = Rescuer::findOrFail($id);
+        $destination = "uploads/rescuers/" . $rescuers->images;
+        if (File::exists($destination)) {
+            File::delete($destination);
+        }
+        $rescuers->forceDelete();
         return Redirect::route("rescuer.index")->with(
-            "force",
+            "success",
             "Rescuer Data Permanently Deleted!"
         );
     }
