@@ -17,6 +17,7 @@
                     <label for="classify" class="text-lg">Classify</label>
                     <input type="text"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="classify"
                     name="classify"
                     placeholder="Classify"
                     value="{{old('classify')}}">
@@ -27,8 +28,8 @@
 
                     <label for="animals_id" class="text-lg">Animal Name</label>
                     <select name="animals_id" id="animals_id" class="block shadow-5xl p-2 w-full">
-                        @foreach ($animals as $animal)
-                            <option value="{{ $animal->animals_id }}">{{ $animal->animal_name }}</option>
+                        @foreach ($animals as $id => $animal)
+                            <option value="{{ $id }}">{{ $animal }}</option>
                         @endforeach
                     </select>
 

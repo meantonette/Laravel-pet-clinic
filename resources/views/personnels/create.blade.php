@@ -25,6 +25,7 @@
                     <label for="full_name" class="text-lg">Full Name</label>
                     <input type="text"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="full_name"
                     name="full_name"
                     placeholder="Full Name"
                     value="{{old('full_name')}}">
@@ -37,6 +38,7 @@
                     <label for="email" class="text-lg">Email</label>
                     <input type="email"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="email"
                     name="email"
                     placeholder="Enter your Email"
                     value="{{old('email')}}">
@@ -49,6 +51,7 @@
                     <label for="password" class="text-lg">Password</label>
                     <input type="password"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="password"
                     name="password"
                     placeholder="Enter your Password"
                     value="{{old('password')}}">
@@ -59,7 +62,7 @@
 
                     <div>
                     <label for="role" class="text-lg">Pick Your Role</label>
-                    <select name="role" class="block shadow-5xl p-2 my-5 w-full" value="{{old('role')}}">
+                    <select name="role" id="role" class="block shadow-5xl p-2 my-5 w-full" value="{{old('role')}}">
                       <option>Employee</option>
                       <option>Veterinarian</option>
                       <option>Volunteer</option>
@@ -73,6 +76,7 @@
                    <label for="images" class="text-lg">Personnel Pic</label>
                    <input type="file"
                    class="block shadow-5xl p-2 w-full"
+                   id="images"
                    name="images"
                    value="{{old('images')}}">
                    @if($errors->has('images'))

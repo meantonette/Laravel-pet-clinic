@@ -17,6 +17,7 @@
                     <label for="animal_name" class="text-lg">Animal Name</label>
                     <input type="text"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="animal_name"
                     name="animal_name"
                     placeholder="Animal Name"
                     value="{{old('animal_name')}}">
@@ -29,6 +30,7 @@
                     <label for="age" class="text-lg">Age</label>
                     <input type="text"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="age"
                     name="age"
                     placeholder="Age"
                     value="{{old('age')}}">
@@ -38,9 +40,10 @@
                     </div>
 
                     <div>
-                    <label for="gender" class="text-lg"r">Gender</label>
+                    <label for="gender" class="text-lg">Gender</label>
                     <input type="text"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="gender"
                     name="gender"
                     placeholder="Gender"
                     value="{{old('gender')}}">
@@ -50,9 +53,10 @@
                     </div>
 
                     <div>
-                    <label for="type" class="text-lg"r">Type</label>
+                    <label for="type" class="text-lg">Type</label>
                     <input type="text"
                     class="block shadow-5xl p-2 my-5 w-full"
+                    id="type"
                     name="type"
                     placeholder="Type of Animal"
                     value="{{old('type')}}">
@@ -65,6 +69,7 @@
                     <label for="images" class="text-lg">Animal Pic</label>
                     <input type="file"
                     class="block shadow-5xl p-2 w-full"
+                    id="images"
                     name="images"
                     value="{{old('images')}}">
                     @if($errors->has('images'))
@@ -72,10 +77,17 @@
                     @endif 
                     </div>
 
-                    <label for="rescuer_id"" class="text-lg">Rescuer</label>
+                    <label for="rescuer_id" class="text-lg">Rescuer</label>
                     <select name="rescuer_id" id="rescuer_id" class="block shadow-5xl p-2 w-full">
-                        @foreach ($rescuers as $rescuer)
-                            <option value="{{ $rescuer->rescuer_id }}">{{ $rescuer->last_name }},{{ $rescuer->first_name }}</option>
+                        @foreach ($rescuers as $id => $rescuer)
+                            <option value="{{ $id }}">{{ $rescuer }}</option>
+                        @endforeach
+                    </select>
+
+                    <label for="adopter_id" class="text-lg">Adopter</label>
+                    <select name="adopter_id" id="adopter_id" class="block shadow-5xl p-2 w-full">
+                        @foreach ($adopters as $id => $adopter)
+                            <option value="{{ $id }}">{{ $adopter }}</option>
                         @endforeach
                     </select>
 
