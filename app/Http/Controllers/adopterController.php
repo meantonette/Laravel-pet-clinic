@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\adopterRequest;
 use App\Models\Animal;
 use App\Models\Adopter;
-
 class adopterController extends Controller
 {
     /**
@@ -20,11 +20,17 @@ class adopterController extends Controller
     public function index()
     {
         $adopters = Adopter::leftJoin(
-            "animals",
+            "animal_adopter",
             "adopters.id",
             "=",
-            "animals.adopter_id"
+            "animal_adopter.adopter_id"
         )
+            ->leftJoin(
+                "animals",
+                "animals.id",
+                "=",
+                "animal_adopter.animals_id"
+            )
             ->select(
                 "adopters.id",
                 "adopters.first_name",
@@ -47,7 +53,8 @@ class adopterController extends Controller
      */
     public function create()
     {
-        return View::make("adopters.create");
+        $animals = Animal::pluck("animal_name", "id");
+        return view("adopters.create", ["animals" => $animals]);
     }
 
     /**
@@ -70,6 +77,14 @@ class adopterController extends Controller
             $adopters->images = $filename;
         }
         $adopters->save();
+        if ($request->animals_id) {
+            foreach ($request->animals_id as $animals_id) {
+                DB::table("animal_adopter")->insert([
+                    "animals_id" => $animals_id,
+                    "adopter_id" => $adopters->id,
+                ]);
+            }
+        }
         return Redirect::to("/adopter")->with("success", "New Adopter Added!");
     }
 
@@ -93,7 +108,17 @@ class adopterController extends Controller
     public function edit($id)
     {
         $adopters = Adopter::find($id);
-        return View::make("adopters.edit", compact("adopters"));
+
+        $animal_adopter = DB::table("animal_adopter")
+            ->where("adopter_id", $id)
+            ->pluck("animals_id")
+            ->toArray();
+
+        $animals = Animal::pluck("animal_name", "id");
+        return View::make(
+            "adopters.edit",
+            compact("adopters", "animal_adopter", "animals")
+        );
     }
 
     /**
@@ -106,6 +131,24 @@ class adopterController extends Controller
     public function update(adopterRequest $request, $id)
     {
         $adopters = Adopter::find($id);
+        $animals_id = $request->animals_id;
+
+        if (empty($animals_id)) {
+            DB::table("animal_adopter")
+                ->where("adopter_id", $id)
+                ->delete();
+        } else {
+            DB::table("animal_adopter")
+                ->where("adopter_id", $id)
+                ->delete();
+            foreach ($animals_id as $animal_id) {
+                DB::table("animal_adopter")->insert([
+                    "animals_id" => $animal_id,
+                    "adopter_id" => $id,
+                ]);
+            }
+        }
+
         $adopters->first_name = $request->input("first_name");
         $adopters->last_name = $request->input("last_name");
         $adopters->phone_number = $request->input("phone_number");
