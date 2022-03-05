@@ -49,6 +49,14 @@
                         @endif
                     </div>
 
+                    <div class="inline">
+                        <label class="block text-lg pb-2">Animals</label>
+                        @foreach ($animals as $animals_id => $animal)
+                        {!!Form::label('animals', $animal,array('class'=>'inline-block w-1/12')) !!}
+                        {!! Form::checkbox('animals_id[]',$animals_id, null, array('class'=>'inline-block
+                        w-1/12','id'=>'animals')) !!}
+                        @endforeach
+
                     <div class="grid grid-cols-2 gap-2 w-full">
                         <button type="submit" class="bg-green-800 text-white font-bold p-2 mt-5">
                             Submit
