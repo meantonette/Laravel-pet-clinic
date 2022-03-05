@@ -65,13 +65,6 @@
                         @endforeach
                     </select>
 
-                    <label for="adopter_id" class="text-lg">Adopter</label>
-                    <select name="adopter_id" id="adopter_id" class="block shadow-5xl p-2 w-full">
-                        @foreach ($adopters as $id => $adopter)
-                        <option value="{{ $id }}">{{ $adopter }}</option>
-                        @endforeach
-                    </select>
-
                     <div class="grid grid-cols-2 gap-2 w-full">
                         <button type="submit" class="bg-green-800 text-white font-bold p-2 mt-5">
                             Submit
