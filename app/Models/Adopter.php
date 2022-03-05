@@ -22,6 +22,8 @@ class Adopter extends Model
 
     protected $table = "adopters";
 
+    protected $fillable = ["first_name", "last_name", "phone_number", "images"];
+
     protected $primaryKey = "id";
 
     protected $guarded = ["id"];
