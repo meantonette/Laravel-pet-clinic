@@ -14,7 +14,7 @@ use App\Http\Controllers\adopterController;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-|
+|  Prettier for php: composer fix-cs
 */
 
 Route::resource("/animals", animalController::class)->middleware("isLoggedIn");
