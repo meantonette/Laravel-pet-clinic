@@ -38,9 +38,7 @@ Route::get("/rescuer/forceDelete/{id}", [
     "as" => "rescuer.forceDelete",
 ]);
 
-Route::resource("/diseaseinjury", diseaseInjuryController::class)->middleware(
-    "isLoggedIn"
-);
+Route::resource("/diseaseinjury", diseaseInjuryController::class)->middleware("isLoggedIn");
 Route::get("/diseaseinjury/restore/{id}", [
     "uses" => "diseaseInjuryController@restore",
     "as" => "diseaseinjury.restore",
@@ -50,9 +48,7 @@ Route::get("/diseaseinjury/forceDelete/{id}", [
     "as" => "diseaseinjury.forceDelete",
 ]);
 
-Route::resource("/personnel", personnelController::class)->middleware(
-    "isLoggedIn"
-);
+Route::resource("/personnel", personnelController::class)->middleware("isLoggedIn");
 Route::get("/personnel/restore/{id}", [
     "uses" => "personnelController@restore",
     "as" => "personnel.restore",
@@ -72,17 +68,8 @@ Route::get("/adopter/forceDelete/{id}", [
     "as" => "adopter.forceDelete",
 ]);
 
-Route::get("/login", [personnelController::class, "login"])->middleware(
-    "alreadyLoggedIn"
-);
+Route::get("/login", [personnelController::class, "login"])->middleware("alreadyLoggedIn");
 Route::post("/check", [personnelController::class, "check"])->name("check");
-Route::get("/dashboard", [personnelController::class, "dashboard"])->middleware(
-    "isLoggedIn"
-);
-Route::get("/logout", [personnelController::class, "logout"])->middleware(
-    "isLoggedIn"
-);
-Route::get("/personnel/create", [
-    personnelController::class,
-    "create",
-])->middleware("alreadyLoggedIn");
+Route::get("/dashboard", [personnelController::class, "dashboard"])->middleware("isLoggedIn");
+Route::get("/logout", [personnelController::class, "logout"])->middleware("isLoggedIn");
+Route::get("/personnel/create", [personnelController::class,"create",])->middleware("alreadyLoggedIn");

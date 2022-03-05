@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\rescuerRequest;
+use App\Http\Requests\rescuerRequest; //tawagin mo yung form req na gianwa mo 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
@@ -20,9 +20,9 @@ class rescuerController extends Controller
     {
         $rescuers = Rescuer::leftJoin(
             "animals",
-            "rescuers.id",
+            "rescuers.id", //left  
             "=",
-            "animals.rescuer_id"
+            "animals.rescuer_id" //right
         )
             ->select(
                 "rescuers.id",
@@ -38,6 +38,7 @@ class rescuerController extends Controller
             ->paginate(2);
         return view("rescuers.index", ["rescuers" => $rescuers]);
         //return view("rescuers.index", compact("rescuers"));
+
     }
 
     /**
@@ -47,7 +48,7 @@ class rescuerController extends Controller
      */
     public function create()
     {
-        return View::make("rescuers.create");
+        return view("rescuers.create");
     }
 
     /**
@@ -56,7 +57,7 @@ class rescuerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(rescuerRequest $request)
+    public function store(rescuerRequest $request) //at ilagay dito finally
     {
         $rescuers = new Rescuer();
         $rescuers->first_name = $request->input("first_name");
@@ -65,7 +66,7 @@ class rescuerController extends Controller
         if ($request->hasfile("images")) {
             $file = $request->file("images");
             $extension = $file->getClientOriginalExtension();
-            $filename = time() . "." . $extension;
+            $filename = time() . "." . $extension; //rand() alternative for time
             $file->move("uploads/rescuers/", $filename);
             $rescuers->images = $filename;
         }

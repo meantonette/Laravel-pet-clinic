@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Rescuer;
+use App\Models\Rescuer; //dont forget this
 use Illuminate\Foundation\Http\FormRequest;
 
 class rescuerRequest extends FormRequest
@@ -14,7 +14,7 @@ class rescuerRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return true; //gawen true ito nakafalse yan default
     }
 
     /**
@@ -24,6 +24,6 @@ class rescuerRequest extends FormRequest
      */
     public function rules()
     {
-        return Rescuer::VALIDATION_RULES;
+        return Rescuer::VALIDATION_RULES; //taz tatawagin mo syemfre
     }
 }
