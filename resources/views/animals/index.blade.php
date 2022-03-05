@@ -24,6 +24,7 @@
             <th class="w-screen text-3xl">Type of Animal</th>
             <th class="w-screen text-3xl">Rescuer</th>
             <th class="w-screen text-3xl">Adopter</th>
+            <th class="w-screen text-3xl">Disease/Injury</th>
             <th class="w-screen text-3xl">Animal Pic</th>
             <th class="w-screen text-3xl">Update</th>
             <th class="w-screen text-3xl">Delete</th>
@@ -54,17 +55,20 @@
             <td class=" text-center text-3xl">
                 {{ $animal->fname }}
             </td>
+            <td class=" text-center text-3xl">
+                {{ $animal->classify }}
+            </td>
             <td class="pl-6">
                 <img src="{{ asset('uploads/animals/'.$animal->images)}}" alt="I am A Pic" width="75" height="75">
             </td>
             <td class=" text-center">
-                <a href="animals/{{ $animal->id }}/edit" class="text-center text-2xl bg-green-600 p-2">
+                <a href="animals/{{ $animal->id }}/edit" class="text-center text-xl bg-green-600 p-2">
                     Update &rarr;
                 </a>
             </td>
             <td class=" text-center">
                 {!! Form::open(array('route' => array('animals.destroy', $animal->id),'method'=>'DELETE')) !!}
-                <button type="submit" class="text-center text-2xl bg-red-600 p-2">
+                <button type="submit" class="text-center text-xl bg-red-600 p-2">
                     Delete &rarr;
                 </button>
                 {!! Form::close() !!}
@@ -72,7 +76,7 @@
             @if($animal->deleted_at)
             <td>
                 <a href="{{ route('animals.restore', $animal->id) }}">
-                    <p class="text-center text-red-700 text-2xl bg-blue-600 p-2">
+                    <p class="text-center text-red-700 text-xl bg-blue-600 p-2">
                         Restore &rarr;
                     </p>
                 </a>
@@ -80,7 +84,7 @@
             @else
             <td>
                 <a href="#">
-                    <p class="text-center text-2xl bg-blue-600 p-2">
+                    <p class="text-center text-xl bg-blue-600 p-2">
                         Restore &rarr;
                     </p>
                 </a>
@@ -88,7 +92,7 @@
             @endif
             <td>
                 <a href="{{ route('animals.forceDelete', $animal->id) }}">
-                    <p class="text-center text-2xl bg-black text-white p-2 mx-2"
+                    <p class="text-center text-xl bg-black text-white p-2 mx-2"
                         onclick="return confirm('Do you want to delete this data permanently?')">
                         Destroy &rarr;
                     </p>
