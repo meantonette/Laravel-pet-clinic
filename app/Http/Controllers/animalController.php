@@ -25,10 +25,34 @@ class animalController extends Controller
             "=",
             "animals.rescuer_id"
         )
-            ->join("adopters", "adopters.id", "=", "animals.adopter_id")
+            ->leftJoin(
+                "animal_adopter",
+                "animals.id",
+                "=",
+                "animal_adopter.animals_id"
+            )
+            ->leftJoin(
+                "adopters",
+                "adopters.id",
+                "=",
+                "animal_adopter.adopter_id"
+            )
+            ->leftJoin(
+                "animal_disease_injury",
+                "animals.id",
+                "=",
+                "animal_disease_injury.animals_id"
+            )
+            ->leftJoin(
+                "disease_injuries",
+                "disease_injuries.id",
+                "=",
+                "animal_disease_injury.disease_injury_id"
+            )
             ->select(
                 "rescuers.first_name",
                 "adopters.first_name as fname",
+                "disease_injuries.classify",
                 "animals.id",
                 "animals.animal_name",
                 "animals.age",
@@ -52,10 +76,8 @@ class animalController extends Controller
     public function create()
     {
         $rescuers = Rescuer::pluck("first_name", "id");
-        $adopters = Adopter::pluck("first_name", "id");
         return view("animals.create", [
             "rescuers" => $rescuers,
-            "adopters" => $adopters,
         ]);
     }
 
@@ -73,7 +95,6 @@ class animalController extends Controller
         $animals->gender = $request->input("gender");
         $animals->type = $request->input("type");
         $animals->rescuer_id = $request->input("rescuer_id");
-        $animals->adopter_id = $request->input("adopter_id");
         if ($request->hasfile("images")) {
             $file = $request->file("images");
             $extension = $file->getClientOriginalExtension();
@@ -106,11 +127,9 @@ class animalController extends Controller
     {
         $animals = Animal::find($id);
         $rescuers = Rescuer::pluck("first_name", "id");
-        $adopters = Adopter::pluck("first_name", "id");
         return view("animals.edit", [
             "animals" => $animals,
             "rescuers" => $rescuers,
-            "adopters" => $adopters,
         ]);
     }
 
@@ -129,7 +148,6 @@ class animalController extends Controller
         $animals->gender = $request->input("gender");
         $animals->type = $request->input("type");
         $animals->rescuer_id = $request->input("rescuer_id");
-        $animals->adopter_id = $request->input("adopter_id");
         if ($request->hasfile("images")) {
             $destination = "uploads/animals/" . $animals->images;
             if (File::exists($destination)) {
