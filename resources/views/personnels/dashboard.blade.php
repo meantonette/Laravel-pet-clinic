@@ -8,7 +8,7 @@
   <table class="table-auto">
     <tr class="text-white">
       <th class="w-screen text-3xl">Id</th>
-      <th class="w-screen text-3xl">Full Name</th>
+      <th class="w-screen text-3xl">Position</th>
       <th class="w-screen text-3xl">Email</th>
       <th class="w-screen text-3xl">Personnel Pic</th>
       <th class="w-screen text-3xl">Action</th>
@@ -19,7 +19,7 @@
         {{ $personnel->id }}
       </td>
       <td class=" text-center text-3xl">
-        {{ $personnel->full_name }}
+        {{ $personnel->role }}
       </td>
       <td class=" text-center text-3xl">
         {{ $personnel->email }}
