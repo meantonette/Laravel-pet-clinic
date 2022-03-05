@@ -40,7 +40,6 @@ return new class extends Migration {
             $table->string(column: "type");
             $table->string(column: "images");
             $table->integer(column: "rescuer_id")->unsigned();
-            $table->integer(column: "adopter_id")->unsigned();
             $table->timestamps();
             $table->softDeletes();
             $table
@@ -48,6 +47,16 @@ return new class extends Migration {
                 ->references("id")
                 ->on("rescuers")
                 ->onDelete("cascade");
+        });
+
+        Schema::create("animal_adopter", function (Blueprint $table) {
+            $table->integer("animals_id")->unsigned();
+            $table
+                ->foreign("animals_id")
+                ->references("id")
+                ->on("animals")
+                ->onDelete("cascade");
+            $table->integer("adopter_id")->unsigned();
             $table
                 ->foreign("adopter_id")
                 ->references("id")
@@ -88,6 +97,7 @@ return new class extends Migration {
         Schema::dropIfExists("rescuers");
         Schema::dropIfExists("animals");
         Schema::dropIfExists("adopters");
+        Schema::dropIfExists("animal_adopter");
         Schema::dropIfExists("disease_injuries");
         Schema::dropIfExists("animal_disease_injury");
     }
