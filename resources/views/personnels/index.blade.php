@@ -14,7 +14,7 @@
             <th class="w-screen text-3xl">Id</th>
             <th class="w-screen text-3xl">Full Name</th>
             <th class="w-screen text-3xl">Email</th>
-            <th class="w-screen text-3xl">Role</th>
+            <th class="w-screen text-3xl">Position</th>
             <th class="w-screen text-3xl">Personnel Pic</th>
             <th class="w-screen text-3xl">Update</th>
             <th class="w-screen text-3xl">Delete</th>
