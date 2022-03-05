@@ -64,15 +64,6 @@
                     @endif
                 </div>
 
-                <div>
-                    <label for="adopter_id" class="text-lg">Type</label>
-                    {!! Form::select('adopter_id',$adopters, $animals->adopter_id,['class' => 'block shadow-5xl p-2 my-5
-                    w-full']) !!}
-                    @if($errors->has('adopter_id'))
-                    <p class="text-center text-red-500">{{ $errors->first('adopter_id') }}</p>
-                    @endif
-                </div>
-
                 <div class="grid grid-cols-2 gap-2 w-full">
                     <button type="submit" class="bg-green-800 text-white font-bold p-2 mt-5">
                         Submit
